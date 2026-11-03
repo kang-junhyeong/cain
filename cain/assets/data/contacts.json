@@ -1,0 +1,34 @@
+[
+  {
+    "id": "contact_student_support",
+    "department": { "ko": "학생지원팀", "en": "Student Support Team", "zh": "学生支持组", "bn": "শিক্ষার্থী সহায়তা দল" },
+    "duty": { "ko": "증명서 발급, 학생 서비스 전반", "en": "Certificate issuance, general student services", "zh": "证书申请、学生服务总体", "bn": "সার্টিফিকেট ইস্যু, সাধারণ ছাত্র সেবা" },
+    "phone": "TODO: 실제 번호 입력",
+    "buildingId": "student_union",
+    "officialUrl": null
+  },
+  {
+    "id": "contact_academic_affairs",
+    "department": { "ko": "교무처", "en": "Academic Affairs Office", "zh": "教务处", "bn": "একাডেমিক অ্যাফেয়ার্স অফিস" },
+    "duty": { "ko": "수강신청, 성적, 졸업", "en": "Course registration, grades, graduation", "zh": "选课、成绩、毕业", "bn": "কোর্স নিবন্ধন, গ্রেড, স্নাতক" },
+    "phone": "TODO: 실제 번호 입력",
+    "buildingId": null,
+    "officialUrl": null
+  },
+  {
+    "id": "contact_international",
+    "department": { "ko": "국제교류팀", "en": "International Affairs Team", "zh": "国际交流组", "bn": "আন্তর্জাতিক বিষয়ক দল" },
+    "duty": { "ko": "외국인 유학생 지원, 비자, 기숙사", "en": "International student support, visa, dormitory", "zh": "留学生支持、签证、宿舍", "bn": "আন্তর্জাতিক শিক্ষার্থী সহায়তা, ভিসা, ডরমিটরি" },
+    "phone": "TODO: 실제 번호 입력",
+    "buildingId": null,
+    "officialUrl": null
+  },
+  {
+    "id": "contact_library",
+    "department": { "ko": "도서관", "en": "Library", "zh": "图书馆", "bn": "লাইব্রেরি" },
+    "duty": { "ko": "자료 검색, 대출·반납, 열람실 예약", "en": "Resource search, borrow/return, study room reservation", "zh": "资料检索、借还书、阅览室预约", "bn": "রিসোর্স অনুসন্ধান, ধার/ফেরত, স্টাডি রুম বুকিং" },
+    "phone": "TODO: 실제 번호 입력",
+    "buildingId": "library",
+    "officialUrl": null
+  }
+]

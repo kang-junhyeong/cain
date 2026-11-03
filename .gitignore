@@ -1,0 +1,31 @@
+# 추적할 항목만 남기고 나머지 전부 무시
+
+# 이 폴더 전체 무시
+CLAUDE.md
+시험공부/
+시험대비_코드/
+시험대비_PDF/
+시험안내.md
+
+# Flutter/Dart 빌드 산출물
+cain/.dart_tool/
+cain/.flutter-plugins
+cain/.flutter-plugins-dependencies
+cain/.packages
+cain/build/
+cain/android/.gradle/
+cain/android/local.properties
+cain/android/key.properties
+cain/ios/.symlinks/
+cain/ios/Pods/
+cain/ios/Flutter/flutter_export_environment.sh
+cain/coverage/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db

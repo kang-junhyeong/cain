@@ -1,0 +1,183 @@
+[
+  {
+    "id": "certificate_guide",
+    "categoryId": "documents",
+    "title": { "ko": "증명서 발급 안내", "en": "Certificate Issuance Guide", "zh": "证书申请指南", "bn": "সার্টিফিকেট ইস্যু গাইড" },
+    "summary": { "ko": "재학·성적·졸업 등 각종 증명서 발급 방법과 절차 안내", "en": "Guide to issuing enrollment, transcript, and graduation certificates", "zh": "在学证明、成绩单、毕业证书等各类证书的申请方法和流程", "bn": "ভর্তি, ট্রান্সক্রিপ্ট এবং স্নাতক সার্টিফিকেট ইস্যু করার গাইড" },
+    "location": { "ko": "학생회관 1층 무인발급기", "en": "1F Student Union Kiosk", "zh": "学生会馆1楼自助发证机", "bn": "১ম তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
+    "hours": { "ko": "09:00 - 18:00 (평일)", "en": "09:00 - 18:00 (Weekdays)", "zh": "09:00 - 18:00（工作日）", "bn": "০৯:০০ - ১৮:০০ (সপ্তাহের দিন)" },
+    "requirements": { "ko": "학생증 또는 신분증", "en": "Student ID or national ID", "zh": "学生证或身份证", "bn": "ছাত্র আইডি বা জাতীয় পরিচয়পত্র" },
+    "targetUsers": { "ko": "재학생 / 졸업생", "en": "Current students / Alumni", "zh": "在校生 / 毕业生", "bn": "বর্তমান শিক্ষার্থী / প্রাক্তন শিক্ষার্থী" },
+    "buildingId": "student_union",
+    "contactIds": ["contact_student_support"],
+    "iconName": "description",
+    "verificationStatus": "pending"
+  },
+  {
+    "id": "certificate_enrollment",
+    "categoryId": "documents",
+    "title": { "ko": "재학 증명서", "en": "Enrollment Certificate", "zh": "在学证明书", "bn": "ভর্তি সার্টিফিকেট" },
+    "summary": { "ko": "현재 재학 중임을 증명하는 공식 증명서", "en": "Official certificate proving current enrollment", "zh": "证明当前在校就读的官方证书", "bn": "বর্তমান ভর্তি প্রমাণের অফিসিয়াল সার্টিফিকেট" },
+    "location": { "ko": "학생회관 1층 무인발급기", "en": "1F Student Union Kiosk", "zh": "学生会馆1楼自助发证机", "bn": "১ম তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
+    "hours": { "ko": "09:00 - 18:00 (평일)", "en": "09:00 - 18:00 (Weekdays)", "zh": "09:00 - 18:00（工作日）", "bn": "০৯:০০ - ১৮:০০ (সপ্তাহের দিন)" },
+    "requirements": { "ko": "학생증 또는 신분증", "en": "Student ID or national ID", "zh": "学生证或身份证", "bn": "ছাত্র আইডি বা জাতীয় পরিচয়পত্র" },
+    "targetUsers": { "ko": "재학생", "en": "Current students", "zh": "在校生", "bn": "বর্তমান শিক্ষার্থী" },
+    "buildingId": "student_union",
+    "contactIds": ["contact_student_support"],
+    "iconName": "school",
+    "verificationStatus": "pending",
+    "steps": [
+      {
+        "id": "step_enroll_01",
+        "serviceId": "certificate_enrollment",
+        "order": 1,
+        "title": { "ko": "학생회관 1층으로 이동", "en": "Go to 1F of Student Union", "zh": "前往学生会馆1楼", "bn": "স্টুডেন্ট ইউনিয়নের ১ম তলায় যান" },
+        "body": { "ko": "학생회관 건물 1층에 위치한 무인발급기 앞으로 이동하세요. 정문에서 도보 약 5분 거리입니다.", "en": "Go to the self-service kiosk on the 1st floor of the Student Union building, approximately 5 minutes walk from the main gate.", "zh": "前往学生会馆1楼的自助发证机前。距正门步行约5分钟。", "bn": "স্টুডেন্ট ইউনিয়ন বিল্ডিংয়ের ১ম তলায় সেলফ-সার্ভিস কিওস্কে যান। মূল গেট থেকে প্রায় ৫ মিনিটের হাঁটা পথ।" },
+        "caution": null
+      },
+      {
+        "id": "step_enroll_02",
+        "serviceId": "certificate_enrollment",
+        "order": 2,
+        "title": { "ko": "무인발급기에서 증명서 종류 선택", "en": "Select certificate type at kiosk", "zh": "在自助机上选择证书种类", "bn": "কিওস্কে সার্টিফিকেটের ধরন নির্বাচন করুন" },
+        "body": { "ko": "무인발급기 화면에서 '재학증명서'를 선택하세요. 언어 변경 버튼으로 영어 등 다른 언어로 전환할 수 있습니다.", "en": "Select 'Enrollment Certificate' on the kiosk screen. You can switch to another language using the language button.", "zh": "在自助机屏幕上选择'在学证明书'。可以使用语言切换按钮切换到其他语言。", "bn": "কিওস্ক স্ক্রিনে 'ভর্তি সার্টিফিকেট' নির্বাচন করুন। ভাষা বোতাম ব্যবহার করে অন্য ভাষায় পরিবর্তন করতে পারেন।" },
+        "caution": { "ko": "증명서 종류에 따라 수수료가 발생할 수 있습니다.", "en": "Fees may apply depending on the certificate type.", "zh": "根据证书种类可能会产生费用。", "bn": "সার্টিফিকেটের ধরন অনুযায়ী ফি প্রযোজ্য হতে পারে।" }
+      },
+      {
+        "id": "step_enroll_03",
+        "serviceId": "certificate_enrollment",
+        "order": 3,
+        "title": { "ko": "학생증 또는 신분증 투입", "en": "Insert student ID or national ID", "zh": "插入学生证或身份证", "bn": "ছাত্র আইডি বা জাতীয় পরিচয়পত্র ঢোকান" },
+        "body": { "ko": "화면 안내에 따라 학생증 또는 신분증을 카드 투입구에 넣으세요. 본인 확인 후 자동으로 다음 단계로 이동합니다.", "en": "Insert your student ID or national ID into the card slot as instructed. After identity verification, it will proceed automatically.", "zh": "按照屏幕指示将学生证或身份证插入读卡口。身份验证后自动进入下一步。", "bn": "স্ক্রিনের নির্দেশ অনুযায়ী কার্ড স্লটে আপনার আইডি ঢোকান। পরিচয় যাচাইয়ের পরে স্বয়ংক্রিয়ভাবে পরবর্তী ধাপে যাবে।" },
+        "caution": null
+      },
+      {
+        "id": "step_enroll_04",
+        "serviceId": "certificate_enrollment",
+        "order": 4,
+        "title": { "ko": "증명서 수령", "en": "Receive certificate", "zh": "领取证书", "bn": "সার্টিফিকেট গ্রহণ করুন" },
+        "body": { "ko": "출력된 증명서를 수령하세요. 발급된 증명서의 내용과 직인을 반드시 확인하세요.", "en": "Collect the printed certificate. Make sure to check the content and official seal on the certificate.", "zh": "领取打印出的证书。请务必检查证书内容和官方印章。", "bn": "মুদ্রিত সার্টিফিকেট সংগ্রহ করুন। সার্টিফিকেটের বিষয়বস্তু এবং অফিসিয়াল সীল অবশ্যই পরীক্ষা করুন।" },
+        "caution": null
+      }
+    ]
+  },
+  {
+    "id": "certificate_transcript",
+    "categoryId": "documents",
+    "title": { "ko": "성적 증명서", "en": "Transcript", "zh": "成绩证明书", "bn": "ট্রান্সক্রিপ্ট" },
+    "summary": { "ko": "학기별 성적을 확인할 수 있는 공식 증명서", "en": "Official document showing semester grades", "zh": "可确认各学期成绩的官方证书", "bn": "সেমিস্টার গ্রেড দেখানো অফিসিয়াল ডকুমেন্ট" },
+    "location": { "ko": "학생회관 1층 무인발급기", "en": "1F Student Union Kiosk", "zh": "学生会馆1楼自助发证机", "bn": "১ম তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
+    "hours": { "ko": "09:00 - 18:00 (평일)", "en": "09:00 - 18:00 (Weekdays)", "zh": "09:00 - 18:00（工作日）", "bn": "০৯:০০ - ১৮:০০ (সপ্তাহের দিন)" },
+    "requirements": { "ko": "학생증 또는 신분증", "en": "Student ID or national ID", "zh": "学生证或身份证", "bn": "ছাত্র আইডি বা জাতীয় পরিচয়পত্র" },
+    "targetUsers": { "ko": "재학생 / 졸업생", "en": "Current students / Alumni", "zh": "在校生 / 毕业生", "bn": "বর্তমান শিক্ষার্থী / প্রাক্তন শিক্ষার্থী" },
+    "buildingId": "student_union",
+    "contactIds": ["contact_student_support"],
+    "iconName": "grade",
+    "verificationStatus": "pending",
+    "steps": [
+      {
+        "id": "step_transcript_01",
+        "serviceId": "certificate_transcript",
+        "order": 1,
+        "title": { "ko": "학생회관 1층으로 이동", "en": "Go to 1F of Student Union", "zh": "前往学生会馆1楼", "bn": "স্টুডেন্ট ইউনিয়নের ১ম তলায় যান" },
+        "body": { "ko": "학생회관 건물 1층에 위치한 무인발급기 앞으로 이동하세요.", "en": "Go to the self-service kiosk on the 1st floor of the Student Union building.", "zh": "前往学生会馆1楼的自助发证机前。", "bn": "স্টুডেন্ট ইউনিয়ন বিল্ডিংয়ের ১ম তলায় সেলফ-সার্ভিস কিওস্কে যান।" },
+        "caution": null
+      },
+      {
+        "id": "step_transcript_02",
+        "serviceId": "certificate_transcript",
+        "order": 2,
+        "title": { "ko": "성적증명서 선택 및 신분 확인", "en": "Select transcript and verify identity", "zh": "选择成绩单并验证身份", "bn": "ট্রান্সক্রিপ্ট নির্বাচন করুন এবং পরিচয় যাচাই করুন" },
+        "body": { "ko": "무인발급기 화면에서 '성적증명서'를 선택하고 학생증 또는 신분증으로 본인 확인을 진행하세요.", "en": "Select 'Transcript' on the kiosk and verify your identity with student ID or national ID.", "zh": "在自助机上选择'成绩证明书'，然后用学生证或身份证进行身份验证。", "bn": "কিওস্কে 'ট্রান্সক্রিপ্ট' নির্বাচন করুন এবং আইডি দিয়ে পরিচয় যাচাই করুন।" },
+        "caution": null
+      },
+      {
+        "id": "step_transcript_03",
+        "serviceId": "certificate_transcript",
+        "order": 3,
+        "title": { "ko": "출력 학기 선택 및 수령", "en": "Select semester and collect", "zh": "选择打印学期并领取", "bn": "সেমিস্টার নির্বাচন করুন এবং সংগ্রহ করুন" },
+        "body": { "ko": "원하는 학기를 선택한 후 출력된 성적 증명서를 수령하세요.", "en": "Select the desired semester and collect the printed transcript.", "zh": "选择所需学期后领取打印出的成绩单。", "bn": "পছন্দের সেমিস্টার নির্বাচন করুন এবং মুদ্রিত ট্রান্সক্রিপ্ট সংগ্রহ করুন।" },
+        "caution": null
+      }
+    ]
+  },
+  {
+    "id": "certificate_graduation",
+    "categoryId": "documents",
+    "title": { "ko": "졸업 증명서", "en": "Graduation Certificate", "zh": "毕业证明书", "bn": "স্নাতক সার্টিফিকেট" },
+    "summary": { "ko": "졸업 완료 사실을 증명하는 공식 증명서", "en": "Official certificate proving graduation completion", "zh": "证明毕业完成事实的官方证书", "bn": "স্নাতক সম্পন্নের প্রমাণের অফিসিয়াল সার্টিফিকেট" },
+    "location": { "ko": "학생회관 1층 무인발급기", "en": "1F Student Union Kiosk", "zh": "学生会馆1楼自助发证机", "bn": "১ম তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
+    "hours": { "ko": "09:00 - 18:00 (평일)", "en": "09:00 - 18:00 (Weekdays)", "zh": "09:00 - 18:00（工作日）", "bn": "০৯:০০ - ১৮:০০ (সপ্তাহের দিন)" },
+    "requirements": { "ko": "신분증", "en": "National ID", "zh": "身份证", "bn": "জাতীয় পরিচয়পত্র" },
+    "targetUsers": { "ko": "졸업생", "en": "Alumni", "zh": "毕业生", "bn": "প্রাক্তন শিক্ষার্থী" },
+    "buildingId": "student_union",
+    "contactIds": ["contact_student_support"],
+    "iconName": "workspace_premium",
+    "verificationStatus": "pending",
+    "steps": [
+      {
+        "id": "step_grad_01",
+        "serviceId": "certificate_graduation",
+        "order": 1,
+        "title": { "ko": "학생회관 1층으로 이동", "en": "Go to 1F of Student Union", "zh": "前往学生会馆1楼", "bn": "স্টুডেন্ট ইউনিয়নের ১ম তলায় যান" },
+        "body": { "ko": "학생회관 건물 1층에 위치한 무인발급기 앞으로 이동하세요.", "en": "Go to the self-service kiosk on the 1st floor of the Student Union building.", "zh": "前往学生会馆1楼的自助发证机前。", "bn": "স্টুডেন্ট ইউনিয়ন বিল্ডিংয়ের ১ম তলায় সেলফ-সার্ভিস কিওস্কে যান।" },
+        "caution": null
+      },
+      {
+        "id": "step_grad_02",
+        "serviceId": "certificate_graduation",
+        "order": 2,
+        "title": { "ko": "졸업증명서 선택 및 신분 확인", "en": "Select graduation certificate and verify", "zh": "选择毕业证明并验证身份", "bn": "স্নাতক সার্টিফিকেট নির্বাচন করুন এবং যাচাই করুন" },
+        "body": { "ko": "'졸업증명서'를 선택하고 신분증으로 본인 확인 후 출력하세요.", "en": "Select 'Graduation Certificate', verify identity, and print.", "zh": "选择'毕业证明书'，身份验证后打印。", "bn": "'স্নাতক সার্টিফিকেট' নির্বাচন করুন, পরিচয় যাচাই করুন এবং প্রিন্ট করুন।" },
+        "caution": null
+      }
+    ]
+  },
+  {
+    "id": "cafeteria",
+    "categoryId": "campus_life",
+    "title": { "ko": "학생식당 이용 안내", "en": "Student Cafeteria Guide", "zh": "学生食堂使用指南", "bn": "ছাত্র ক্যাফেটেরিয়া গাইড" },
+    "summary": { "ko": "식당 위치와 운영시간, PAYCO 등 결제 방법과 이용 순서 안내", "en": "Cafeteria location, hours, payment methods (PAYCO), and usage guide", "zh": "食堂位置、运营时间、PAYCO等支付方式及使用流程说明", "bn": "ক্যাফেটেরিয়ার অবস্থান, সময়, পেমেন্ট পদ্ধতি (PAYCO) এবং ব্যবহার গাইড" },
+    "location": { "ko": "TODO: 실제 위치 확인 필요", "en": "TODO: Verify actual location", "zh": "TODO: 需要确认实际位置", "bn": "TODO: প্রকৃত অবস্থান যাচাই করুন" },
+    "hours": { "ko": "TODO: 실제 운영시간 확인 필요", "en": "TODO: Verify actual hours", "zh": "TODO: 需要确认实际运营时间", "bn": "TODO: প্রকৃত সময় যাচাই করুন" },
+    "requirements": { "ko": "PAYCO 앱 또는 현금", "en": "PAYCO app or cash", "zh": "PAYCO应用或现金", "bn": "PAYCO অ্যাপ বা নগদ" },
+    "targetUsers": { "ko": "재학생 / 교직원", "en": "Students / Faculty", "zh": "在校生 / 教职员工", "bn": "শিক্ষার্থী / শিক্ষক" },
+    "buildingId": null,
+    "contactIds": [],
+    "iconName": "restaurant",
+    "verificationStatus": "pending",
+    "steps": [
+      {
+        "id": "step_cafe_01",
+        "serviceId": "cafeteria",
+        "order": 1,
+        "title": { "ko": "식당으로 이동", "en": "Go to cafeteria", "zh": "前往食堂", "bn": "ক্যাফেটেরিয়ায় যান" },
+        "body": { "ko": "TODO: 실제 위치 안내 입력 필요", "en": "TODO: Add actual location guide", "zh": "TODO: 需要输入实际位置说明", "bn": "TODO: প্রকৃত অবস্থান গাইড যোগ করুন" },
+        "caution": null
+      },
+      {
+        "id": "step_cafe_02",
+        "serviceId": "cafeteria",
+        "order": 2,
+        "title": { "ko": "PAYCO로 결제", "en": "Pay with PAYCO", "zh": "使用PAYCO支付", "bn": "PAYCO দিয়ে পেমেন্ট করুন" },
+        "body": { "ko": "PAYCO 앱을 실행하고 QR코드를 스캔하거나 바코드를 제시하여 결제하세요.", "en": "Open PAYCO app and scan the QR code or show barcode to pay.", "zh": "打开PAYCO应用，扫描QR码或出示条形码进行支付。", "bn": "PAYCO অ্যাপ খুলুন এবং QR কোড স্ক্যান করুন বা বারকোড দেখিয়ে পেমেন্ট করুন।" },
+        "caution": null
+      }
+    ]
+  },
+  {
+    "id": "online_services",
+    "categoryId": "online",
+    "title": { "ko": "학과 홈페이지·교내 온라인 서비스", "en": "Department & Online Services", "zh": "学科主页·校内在线服务", "bn": "বিভাগ ও অনলাইন সেবা" },
+    "summary": { "ko": "학과 홈페이지, 수강신청, 강의계획서, EL 이용 방법 안내", "en": "Guide to department website, course registration, syllabus, and EL usage", "zh": "学科主页、选课、课程计划、EL使用方法说明", "bn": "বিভাগের ওয়েবসাইট, কোর্স নিবন্ধন, সিলেবাস এবং EL ব্যবহার গাইড" },
+    "location": { "ko": "온라인 (인터넷 연결 필요)", "en": "Online (Internet required)", "zh": "在线（需要网络连接）", "bn": "অনলাইন (ইন্টারনেট প্রয়োজন)" },
+    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "bn": "২৪ ঘণ্টা" },
+    "requirements": { "ko": "학번 및 비밀번호", "en": "Student ID number and password", "zh": "学号及密码", "bn": "ছাত্র আইডি নম্বর ও পাসওয়ার্ড" },
+    "targetUsers": { "ko": "재학생", "en": "Current students", "zh": "在校生", "bn": "বর্তমান শিক্ষার্থী" },
+    "buildingId": null,
+    "contactIds": ["contact_academic_affairs"],
+    "iconName": "laptop",
+    "verificationStatus": "pending",
+    "steps": []
+  }
+]
