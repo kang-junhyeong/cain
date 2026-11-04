@@ -4,9 +4,9 @@
 
 ---
 
-## 개발 환경 설정
+## 개발 환경 설정 (Windows · Android Studio 기준)
 
-### 1. 저장소 클론 (Android Studio)
+### 1. 저장소 클론
 
 1. Android Studio 실행
 2. 상단 메뉴 `File > New > Project from Version Control` (3번째 항목)
@@ -16,7 +16,7 @@
 
 ### 2. Flutter SDK 경로 설정 (최초 1회)
 
-`Android Studio > Settings` (Mac: `Cmd + ,`)
+`File > Settings` (단축키: `Ctrl + Alt + S`)
 → `Languages & Frameworks > Flutter`
 → Flutter SDK path 입력
 
@@ -28,13 +28,30 @@
 
 ## Git 작업 흐름
 
-| 작업 | 단축키 (Mac) |
-|------|-------------|
-| 커밋 | `Cmd + K` |
-| 푸시 | `Cmd + Shift + K` |
-| 풀 | `Cmd + T` |
+| 작업 | 단축키 (Windows) |
+|------|----------------|
+| 커밋 | `Ctrl + K` |
+| 푸시 | `Ctrl + Shift + K` |
+| 풀 | `Ctrl + T` |
 
 수정 → 커밋 → 푸시 순서로 진행
+
+---
+
+## Claude Code CLI 설정 (선택)
+
+Android Studio 내장 터미널에서 Claude AI 사용 가능
+
+### 설치
+1. Node.js 설치: https://nodejs.org (LTS 버전)
+2. 터미널에서 설치:
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+3. 터미널 재시작 후 실행:
+```bash
+claude
+```
 
 ---
 
