@@ -172,9 +172,9 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: AppTheme.warning.withOpacity(0.08),
+                      color: AppTheme.warning.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: AppTheme.warning.withOpacity(0.3)),
+                      border: Border.all(color: AppTheme.warning.withValues(alpha: 0.3)),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

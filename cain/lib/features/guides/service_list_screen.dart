@@ -61,7 +61,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: AppTheme.primary.withOpacity(0.07),
+                      color: AppTheme.primary.withValues(alpha: 0.07),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(

@@ -100,7 +100,7 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
                     width: double.infinity,
                     height: 180,
                     decoration: BoxDecoration(
-                      color: AppTheme.primary.withOpacity(0.08),
+                      color: AppTheme.primary.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: step.imagePath != null
@@ -112,7 +112,7 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
                             child: Icon(
                               _stepIcon(_currentIndex),
                               size: 64,
-                              color: AppTheme.primary.withOpacity(0.4),
+                              color: AppTheme.primary.withValues(alpha: 0.4),
                             ),
                           ),
                   ),
@@ -143,9 +143,9 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
                     Container(
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
-                        color: AppTheme.warning.withOpacity(0.08),
+                        color: AppTheme.warning.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppTheme.warning.withOpacity(0.3)),
+                        border: Border.all(color: AppTheme.warning.withValues(alpha: 0.3)),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +195,7 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
                             width: 36,
                             height: 36,
                             decoration: BoxDecoration(
-                              color: AppTheme.accent.withOpacity(0.12),
+                              color: AppTheme.accent.withValues(alpha: 0.12),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const Icon(Icons.smart_toy, color: AppTheme.accent, size: 20),

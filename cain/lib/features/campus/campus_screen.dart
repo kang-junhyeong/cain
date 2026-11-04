@@ -72,9 +72,9 @@ class _CampusFallback extends StatelessWidget {
           margin: const EdgeInsets.all(20),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppTheme.warning.withOpacity(0.08),
+            color: AppTheme.warning.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppTheme.warning.withOpacity(0.4)),
+            border: Border.all(color: AppTheme.warning.withValues(alpha: 0.4)),
           ),
           child: Row(
             children: [
@@ -113,7 +113,7 @@ class _CampusFallback extends StatelessWidget {
                             width: 44,
                             height: 44,
                             decoration: BoxDecoration(
-                              color: AppTheme.primary.withOpacity(0.1),
+                              color: AppTheme.primary.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(Icons.apartment, color: AppTheme.primary, size: 24),

@@ -47,7 +47,7 @@ class _CompletionScreenState extends State<CompletionScreen> {
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                      color: AppTheme.success.withOpacity(0.1),
+                      color: AppTheme.success.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(Icons.check_circle, size: 72, color: AppTheme.success),
@@ -105,7 +105,7 @@ class _CompletionScreenState extends State<CompletionScreen> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: AppTheme.accent.withOpacity(0.12),
+                                  color: AppTheme.accent.withValues(alpha: 0.12),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(

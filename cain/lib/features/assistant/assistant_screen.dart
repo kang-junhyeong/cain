@@ -13,6 +13,8 @@
 //
 // API 계약: DEV_NOTES.md 및 개발 기획서.md 섹션 06·07 참조
 
+// TODO(AI 보류): 서버 연동 시 jsonEncode/jsonDecode에서 사용 — 주석 해제 후 ignore 제거
+// ignore: unused_import
 import 'dart:convert';
 // import 'package:http/http.dart' as http; // TODO(AI 보류): 활성화
 
@@ -21,8 +23,10 @@ import 'package:provider/provider.dart';
 import '../../app/theme.dart';
 import '../../core/locale/locale_provider.dart';
 
-// TODO(AI 보류): 서버 배포 후 실제 URL로 교체
+// TODO(AI 보류): 서버 배포 후 실제 URL로 교체 — 서버 연동 코드 주석 해제 후 ignore 제거
+// ignore: unused_element
 const String _kApiBase = 'TODO: https://your-server.com';
+// ignore: unused_element
 const String _kContentVersion = '2026.11.03.1';
 
 class AssistantScreen extends StatefulWidget {
@@ -63,7 +67,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              color: AppTheme.primary.withOpacity(0.07),
+              color: AppTheme.primary.withValues(alpha: 0.07),
               child: Row(
                 children: [
                   const Icon(Icons.info_outline, size: 15, color: AppTheme.primary),
@@ -190,12 +194,12 @@ class _AssistantScreenState extends State<AssistantScreen> {
     // 더미 응답 (서버 연동 전까지 임시 사용)
     await Future.delayed(const Duration(milliseconds: 800));
     setState(() {
-      _messages.add(_ChatMessage(
+      _messages.add(const _ChatMessage(
         text: '[서버 미연결] AI 기능은 서버 배포 후 이용할 수 있습니다.\n\n'
             'In-app guides are available now. Please check the step-by-step guide for your service.',
         isUser: false,
         status: 'insufficient_evidence',
-        references: const [],
+        references: [],
       ));
     });
     // ─────────────────────────────────────────────────────────────────
@@ -300,8 +304,8 @@ class _MessageBubble extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
                       color: kind == 'official'
-                          ? AppTheme.primary.withOpacity(0.08)
-                          : AppTheme.accent.withOpacity(0.08),
+                          ? AppTheme.primary.withValues(alpha: 0.08)
+                          : AppTheme.accent.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
@@ -378,7 +382,7 @@ class _EmptyState extends StatelessWidget {
             width: 72,
             height: 72,
             decoration: BoxDecoration(
-              color: AppTheme.accent.withOpacity(0.1),
+              color: AppTheme.accent.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(Icons.smart_toy, size: 40, color: AppTheme.accent),

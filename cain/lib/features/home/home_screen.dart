@@ -6,7 +6,6 @@ import '../../core/locale/locale_provider.dart';
 import '../../core/models/service.dart';
 import '../../core/repositories/service_repository.dart';
 import '../../shared/widgets/service_card.dart';
-import '../assistant/assistant_screen.dart';
 import 'home_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -91,9 +90,9 @@ class _HomeTab extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
+                      const Row(
                         children: [
-                          const Text(
+                          Text(
                             'Campus ',
                             style: TextStyle(
                               fontSize: 22,
@@ -101,7 +100,7 @@ class _HomeTab extends StatelessWidget {
                               color: AppTheme.primary,
                             ),
                           ),
-                          const Text(
+                          Text(
                             'Guide',
                             style: TextStyle(
                               fontSize: 22,
@@ -133,7 +132,7 @@ class _HomeTab extends StatelessWidget {
                 borderRadius: BorderRadius.circular(14),
                 child: Container(
                   height: 140,
-                  color: AppTheme.primary.withOpacity(0.15),
+                  color: AppTheme.primary.withValues(alpha: 0.15),
                   child: const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -356,7 +355,7 @@ class _AiAssistantCard extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppTheme.accent.withOpacity(0.12),
+                color: AppTheme.accent.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Icon(Icons.smart_toy, color: AppTheme.accent, size: 26),

@@ -59,7 +59,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   Container(
                     width: double.infinity,
                     height: 120,
-                    color: AppTheme.primary.withOpacity(0.1),
+                    color: AppTheme.primary.withValues(alpha: 0.1),
                     child: Center(
                       child: Icon(_iconFromName(s.iconName), size: 48, color: AppTheme.primary),
                     ),
@@ -83,9 +83,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: AppTheme.success.withOpacity(0.1),
+                                  color: AppTheme.success.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(6),
-                                  border: Border.all(color: AppTheme.success.withOpacity(0.3)),
+                                  border: Border.all(color: AppTheme.success.withValues(alpha: 0.3)),
                                 ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,

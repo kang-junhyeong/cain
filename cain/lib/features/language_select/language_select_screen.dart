@@ -86,7 +86,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                         margin: const EdgeInsets.only(bottom: 12),
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
                         decoration: BoxDecoration(
-                          color: isSelected ? AppTheme.primary.withOpacity(0.08) : Colors.white,
+                          color: isSelected ? AppTheme.primary.withValues(alpha: 0.08) : Colors.white,
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
                             color: isSelected ? AppTheme.primary : AppTheme.divider,
