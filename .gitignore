@@ -29,3 +29,6 @@ cain/coverage/
 # OS
 .DS_Store
 Thumbs.db
+
+# API 키 (env.example.json을 복사해서 env.json 생성)
+cain/env.json

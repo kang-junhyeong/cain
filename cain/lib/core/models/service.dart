@@ -66,6 +66,9 @@ class GuideStep {
   final LocalizedText? caution;
   final String? imagePath;
 
+  /// 이 단계에서 이동해야 할 건물 (있으면 단계 화면에 지도·도보 경로 표시)
+  final String? buildingId;
+
   const GuideStep({
     required this.id,
     required this.serviceId,
@@ -74,6 +77,7 @@ class GuideStep {
     required this.body,
     this.caution,
     this.imagePath,
+    this.buildingId,
   });
 
   factory GuideStep.fromJson(Map<String, dynamic> json) {
@@ -87,6 +91,7 @@ class GuideStep {
           ? LocalizedText.fromJson(json['caution'] as Map<String, dynamic>)
           : null,
       imagePath: json['imagePath'] as String?,
+      buildingId: json['buildingId'] as String?,
     );
   }
 }

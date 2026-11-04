@@ -3,15 +3,19 @@ import 'package:provider/provider.dart';
 import '../../app/routes.dart';
 import '../../app/theme.dart';
 import '../../core/locale/locale_provider.dart';
+import '../../core/models/building.dart';
 import '../../core/models/service.dart';
+import '../../core/repositories/building_repository.dart';
 import '../../core/repositories/service_repository.dart';
 import '../../shared/widgets/step_nav_button.dart';
+import 'widgets/step_route_map.dart';
 
 class GuideStepScreen extends StatefulWidget {
   final String serviceId;
   final int stepIndex;
 
-  const GuideStepScreen({super.key, required this.serviceId, required this.stepIndex});
+  const GuideStepScreen(
+      {super.key, required this.serviceId, required this.stepIndex});
 
   @override
   State<GuideStepScreen> createState() => _GuideStepScreenState();
@@ -19,7 +23,11 @@ class GuideStepScreen extends StatefulWidget {
 
 class _GuideStepScreenState extends State<GuideStepScreen> {
   final _repo = ServiceRepository();
+  final _buildingRepo = BuildingRepository();
   ServiceModel? _service;
+
+  /// 단계에 연결된 건물 (buildingId → Building). 좌표가 있는 건물만 지도로 표시한다.
+  final Map<String, Building> _buildings = {};
   bool _isLoading = true;
   late int _currentIndex;
 
@@ -32,6 +40,15 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
 
   Future<void> _load() async {
     _service = await _repo.getById(widget.serviceId);
+    final buildingIds = {
+      for (final step in _service?.steps ?? const <GuideStep>[])
+        if (step.buildingId != null) step.buildingId!,
+    };
+    for (final id in buildingIds) {
+      final building = await _buildingRepo.getById(id);
+      if (building != null) _buildings[id] = building;
+    }
+    if (!mounted) return;
     setState(() => _isLoading = false);
   }
 
@@ -41,10 +58,13 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
     final strings = AppStrings(locale);
 
     if (_isLoading) {
-      return Scaffold(appBar: AppBar(), body: const Center(child: CircularProgressIndicator()));
+      return Scaffold(
+          appBar: AppBar(),
+          body: const Center(child: CircularProgressIndicator()));
     }
     if (_service == null || _service!.steps.isEmpty) {
-      return Scaffold(appBar: AppBar(), body: Center(child: Text(strings.noData)));
+      return Scaffold(
+          appBar: AppBar(), body: Center(child: Text(strings.noData)));
     }
 
     final steps = _service!.steps;
@@ -95,27 +115,36 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
 
                   const SizedBox(height: 20),
 
-                  // 단계 이미지 (없으면 아이콘 placeholder)
-                  Container(
-                    width: double.infinity,
-                    height: 180,
-                    decoration: BoxDecoration(
-                      color: AppTheme.primary.withValues(alpha: 0.08),
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: step.imagePath != null
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(14),
-                            child: Image.asset(step.imagePath!, fit: BoxFit.cover),
-                          )
-                        : Center(
-                            child: Icon(
-                              _stepIcon(_currentIndex),
-                              size: 64,
-                              color: AppTheme.primary.withValues(alpha: 0.4),
+                  // 이동 단계면 지도(건물 위치 + 도보 경로), 아니면 단계 이미지
+                  if (_mapBuildingFor(step) case final building?)
+                    StepRouteMap(
+                      key: ValueKey('map_${step.id}'),
+                      building: building,
+                      locale: locale,
+                    )
+                  else
+                    // 단계 이미지 (없으면 아이콘 placeholder)
+                    Container(
+                      width: double.infinity,
+                      height: 180,
+                      decoration: BoxDecoration(
+                        color: AppTheme.primary.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: step.imagePath != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(14),
+                              child: Image.asset(step.imagePath!,
+                                  fit: BoxFit.cover),
+                            )
+                          : Center(
+                              child: Icon(
+                                _stepIcon(_currentIndex),
+                                size: 64,
+                                color: AppTheme.primary.withValues(alpha: 0.4),
+                              ),
                             ),
-                          ),
-                  ),
+                    ),
 
                   const SizedBox(height: 20),
 
@@ -145,12 +174,14 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
                       decoration: BoxDecoration(
                         color: AppTheme.warning.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppTheme.warning.withValues(alpha: 0.3)),
+                        border: Border.all(
+                            color: AppTheme.warning.withValues(alpha: 0.3)),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(Icons.warning_amber, color: AppTheme.warning, size: 18),
+                          const Icon(Icons.warning_amber,
+                              color: AppTheme.warning, size: 18),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Column(
@@ -167,7 +198,10 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
                                 const SizedBox(height: 4),
                                 Text(
                                   step.caution!.resolve(locale),
-                                  style: const TextStyle(fontSize: 13, color: AppTheme.textPrimary, height: 1.5),
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      color: AppTheme.textPrimary,
+                                      height: 1.5),
                                 ),
                               ],
                             ),
@@ -198,7 +232,8 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
                               color: AppTheme.accent.withValues(alpha: 0.12),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Icon(Icons.smart_toy, color: AppTheme.accent, size: 20),
+                            child: const Icon(Icons.smart_toy,
+                                color: AppTheme.accent, size: 20),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
@@ -206,13 +241,19 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(strings.askAI,
-                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppTheme.textPrimary)),
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppTheme.textPrimary)),
                                 Text(strings.trackProgress,
-                                    style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary)),
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        color: AppTheme.textSecondary)),
                               ],
                             ),
                           ),
-                          const Icon(Icons.chevron_right, color: AppTheme.textSecondary),
+                          const Icon(Icons.chevron_right,
+                              color: AppTheme.textSecondary),
                         ],
                       ),
                     ),
@@ -236,6 +277,12 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
         ],
       ),
     );
+  }
+
+  /// 단계에 연결된 건물 중 좌표가 있는 건물. 없으면 null (지도 대신 이미지 표시)
+  Building? _mapBuildingFor(GuideStep step) {
+    final building = _buildings[step.buildingId];
+    return (building != null && building.hasCoordinates) ? building : null;
   }
 
   void _prevStep() {

@@ -15,6 +15,8 @@ dependencies:
   shared_preferences: ^2.2.3
   url_launcher: ^6.3.0
   http: ^1.2.0
+  google_maps_flutter: ^2.19.0
+  geolocator: ^14.1.2
 
   # TODO(지도 보류): 지도 구현 방식 결정 후 추가
   # google_maps_flutter: ^2.5.0

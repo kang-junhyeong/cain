@@ -2,10 +2,10 @@
   {
     "id": "student_union",
     "name": { "ko": "학생회관", "en": "Student Union", "zh": "学生会馆", "bn": "স্টুডেন্ট ইউনিয়ন" },
-    "latitude": null,
-    "longitude": null,
+    "latitude": 36.7636,
+    "longitude": 127.2817,
     "imagePath": null,
-    "note": "TODO: 실제 위도·경도 및 건물 사진 추가 필요"
+    "note": "TODO: 임시 좌표(캠퍼스 중심 근처) — 학생회관 출입구 실제 좌표로 교체 필요, 건물 사진 추가 필요"
   },
   {
     "id": "library",
