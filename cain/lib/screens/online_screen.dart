@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../app/theme.dart';
-import '../../core/locale/locale_provider.dart';
+import '../app_theme.dart';
+import '../app_strings.dart';
+import '../viewmodels/locale_provider.dart';
 
 // ignore_for_file: use_build_context_synchronously
 

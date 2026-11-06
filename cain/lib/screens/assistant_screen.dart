@@ -18,8 +18,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../app/theme.dart';
-import '../../core/locale/locale_provider.dart';
+import '../app_theme.dart';
+import '../app_strings.dart';
+import '../viewmodels/locale_provider.dart';
 
 // TODO(AI 보류): 서버 배포 후 실제 URL로 교체
 const String _kApiBase = 'TODO: https://your-server.com';

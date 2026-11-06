@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../app/theme.dart';
+import '../app_theme.dart';
 
 class StepNavButtons extends StatelessWidget {
   final bool hasPrev;

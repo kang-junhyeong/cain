@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'app/app.dart';
 import 'app/routes.dart';
-import 'core/locale/locale_provider.dart';
+import 'viewmodels/locale_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

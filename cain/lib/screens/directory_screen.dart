@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../app/theme.dart';
-import '../../core/locale/locale_provider.dart';
-import '../../core/models/contact.dart';
-import '../../core/repositories/contact_repository.dart';
+import '../app_theme.dart';
+import '../app_strings.dart';
+import '../viewmodels/locale_provider.dart';
+import '../models/contact.dart';
+import '../repositories/contact_repository.dart';
 
 class DirectoryScreen extends StatefulWidget {
   const DirectoryScreen({super.key});

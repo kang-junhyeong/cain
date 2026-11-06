@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import '../features/assistant/assistant_screen.dart';
+import '../screens/assistant_screen.dart';
 // TODO(지도 보류): 지도 구현 후 주석 해제
-// import '../features/campus/campus_screen.dart';
-import '../features/directory/directory_screen.dart';
-import '../features/guides/completion_screen.dart';
-import '../features/guides/guide_step_screen.dart';
-import '../features/guides/pre_visit_screen.dart';
-import '../features/guides/service_detail_screen.dart';
-import '../features/guides/service_list_screen.dart';
-import '../features/home/home_screen.dart';
-import '../features/language_select/language_select_screen.dart';
-import '../features/online/online_screen.dart';
+// import '../screens/campus_screen.dart';
+import '../screens/directory_screen.dart';
+import '../screens/completion_screen.dart';
+import '../screens/guide_step_screen.dart';
+import '../screens/pre_visit_screen.dart';
+import '../screens/service_detail_screen.dart';
+import '../screens/service_list_screen.dart';
+import '../screens/home_screen.dart';
+import '../screens/language_select_screen.dart';
+import '../screens/online_screen.dart';
 import 'routes.dart';
-import 'theme.dart';
+import '../app_theme.dart';
 
 class CainApp extends StatelessWidget {
   final String initialRoute;

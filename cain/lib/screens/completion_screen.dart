@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../app/routes.dart';
-import '../../app/theme.dart';
-import '../../core/locale/locale_provider.dart';
-import '../../core/models/service.dart';
-import '../../core/repositories/service_repository.dart';
+import '../app/routes.dart';
+import '../app_theme.dart';
+import '../app_strings.dart';
+import '../viewmodels/locale_provider.dart';
+import '../models/service.dart';
+import '../repositories/service_repository.dart';
 
 class CompletionScreen extends StatefulWidget {
   final String serviceId;

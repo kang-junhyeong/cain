@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../app/theme.dart';
-import '../../core/locale/locale_provider.dart';
-import '../../core/models/service.dart';
+import '../app_theme.dart';
+import '../app_strings.dart';
+import '../models/service.dart';
 
 class ServiceCard extends StatelessWidget {
   final ServiceModel service;
