@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'app_theme.dart';
+import 'repositories/building_repository.dart';
+import 'repositories/contact_repository.dart';
+import 'repositories/service_repository.dart';
 import 'screens/home_screen.dart';
 import 'screens/language_select_screen.dart';
 import 'viewmodels/locale_provider.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  final localeProvider = LocaleProvider();
-  await localeProvider.load();
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: localeProvider),
+        ChangeNotifierProvider(create: (_) => LocaleProvider()..load()),
+        Provider<ServiceRepository>.value(value: ServiceRepository()),
+        Provider<ContactRepository>.value(value: ContactRepository()),
+        Provider<BuildingRepository>.value(value: BuildingRepository()),
       ],
       child: const CainApp(),
     ),

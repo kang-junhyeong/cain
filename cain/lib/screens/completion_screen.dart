@@ -16,7 +16,6 @@ class CompletionScreen extends StatefulWidget {
 }
 
 class _CompletionScreenState extends State<CompletionScreen> {
-  final _repo = ServiceRepository();
   ServiceModel? _service;
   bool _isLoading = true;
   bool _hasError = false;
@@ -29,7 +28,7 @@ class _CompletionScreenState extends State<CompletionScreen> {
 
   Future<void> _load() async {
     try {
-      final service = await _repo.getById(widget.serviceId);
+      final service = await context.read<ServiceRepository>().getById(widget.serviceId);
       if (!mounted) return;
       setState(() => _service = service);
     } catch (_) {

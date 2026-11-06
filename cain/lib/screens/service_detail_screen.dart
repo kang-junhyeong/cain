@@ -17,7 +17,6 @@ class ServiceDetailScreen extends StatefulWidget {
 }
 
 class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
-  final _repo = ServiceRepository();
   ServiceModel? _service;
   bool _isLoading = true;
   bool _hasError = false;
@@ -30,7 +29,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
 
   Future<void> _load() async {
     try {
-      final service = await _repo.getById(widget.serviceId);
+      final service = await context.read<ServiceRepository>().getById(widget.serviceId);
       if (!mounted) return;
       setState(() => _service = service);
     } catch (_) {

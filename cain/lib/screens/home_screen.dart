@@ -20,15 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
-  late final HomeViewModel _vm;
   final TextEditingController _searchCtrl = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _vm = HomeViewModel(ServiceRepository());
-    _vm.loadFeatured();
-  }
 
   @override
   void dispose() {
@@ -38,15 +30,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: _vm,
+    return ChangeNotifierProvider(
+      create: (context) => HomeViewModel(repository: context.read<ServiceRepository>())..loadFeatured(),
       child: Scaffold(
         backgroundColor: AppTheme.background,
         body: IndexedStack(
           index: _currentTab,
           children: [
-            _HomeTab(vm: _vm, searchCtrl: _searchCtrl),
-            _SearchTab(vm: _vm, searchCtrl: _searchCtrl, onGoHome: _goHomeTab),
+            _HomeTab(searchCtrl: _searchCtrl),
+            _SearchTab(searchCtrl: _searchCtrl, onGoHome: _goHomeTab),
             const _SettingsTab(),
           ],
         ),
@@ -75,10 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
 // ───────────────────── 홈 탭 ─────────────────────
 class _HomeTab extends StatelessWidget {
-  final HomeViewModel vm;
   final TextEditingController searchCtrl;
 
-  const _HomeTab({required this.vm, required this.searchCtrl});
+  const _HomeTab({required this.searchCtrl});
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +152,7 @@ class _HomeTab extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 14, 20, 0),
               child: TextField(
                 controller: searchCtrl,
-                onChanged: (v) => vm.search(v, locale),
+                onChanged: (v) => context.read<HomeViewModel>().search(v, locale),
                 decoration: InputDecoration(
                   hintText: strings.searchHint,
                   prefixIcon: const Icon(Icons.search, color: AppTheme.textSecondary),
@@ -170,7 +161,7 @@ class _HomeTab extends StatelessWidget {
                           icon: const Icon(Icons.clear),
                           onPressed: () {
                             searchCtrl.clear();
-                            vm.clearSearch();
+                            context.read<HomeViewModel>().clearSearch();
                           },
                         )
                       : null,
@@ -400,11 +391,10 @@ class _AiAssistantCard extends StatelessWidget {
 
 // ───────────────────── 검색 탭 ─────────────────────
 class _SearchTab extends StatelessWidget {
-  final HomeViewModel vm;
   final TextEditingController searchCtrl;
   final VoidCallback onGoHome;
 
-  const _SearchTab({required this.vm, required this.searchCtrl, required this.onGoHome});
+  const _SearchTab({required this.searchCtrl, required this.onGoHome});
 
   @override
   Widget build(BuildContext context) {
@@ -419,7 +409,7 @@ class _SearchTab extends StatelessWidget {
             child: TextField(
               controller: searchCtrl,
               autofocus: false,
-              onChanged: (v) => vm.search(v, locale),
+              onChanged: (v) => context.read<HomeViewModel>().search(v, locale),
               decoration: InputDecoration(
                 hintText: strings.searchHint,
                 prefixIcon: const Icon(Icons.search, color: AppTheme.textSecondary),
@@ -428,7 +418,7 @@ class _SearchTab extends StatelessWidget {
                         icon: const Icon(Icons.clear),
                         onPressed: () {
                           searchCtrl.clear();
-                          vm.clearSearch();
+                          context.read<HomeViewModel>().clearSearch();
                         },
                       )
                     : null,

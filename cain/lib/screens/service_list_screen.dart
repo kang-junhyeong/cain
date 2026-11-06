@@ -18,7 +18,6 @@ class ServiceListScreen extends StatefulWidget {
 }
 
 class _ServiceListScreenState extends State<ServiceListScreen> {
-  final _repo = ServiceRepository();
   List<ServiceModel> _services = [];
   bool _isLoading = true;
   bool _hasError = false;
@@ -31,9 +30,10 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
 
   Future<void> _load() async {
     try {
+      final repo = context.read<ServiceRepository>();
       final services = widget.categoryId != null
-          ? await _repo.getByCategory(widget.categoryId!)
-          : await _repo.getAll();
+          ? await repo.getByCategory(widget.categoryId!)
+          : await repo.getAll();
       if (!mounted) return;
       setState(() => _services = services);
     } catch (_) {

@@ -17,7 +17,6 @@ class PreVisitScreen extends StatefulWidget {
 }
 
 class _PreVisitScreenState extends State<PreVisitScreen> {
-  final _repo = ServiceRepository();
   ServiceModel? _service;
   bool _isLoading = true;
   bool _hasError = false;
@@ -31,7 +30,7 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
 
   Future<void> _load() async {
     try {
-      final service = await _repo.getById(widget.serviceId);
+      final service = await context.read<ServiceRepository>().getById(widget.serviceId);
       if (!mounted) return;
       setState(() {
         _service = service;

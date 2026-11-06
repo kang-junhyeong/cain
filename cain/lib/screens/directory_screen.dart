@@ -16,7 +16,6 @@ class DirectoryScreen extends StatefulWidget {
 }
 
 class _DirectoryScreenState extends State<DirectoryScreen> {
-  final _repo = ContactRepository();
   final _searchCtrl = TextEditingController();
   List<Contact> _results = [];
   bool _isLoading = true;
@@ -30,7 +29,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
 
   Future<void> _loadAll() async {
     try {
-      final results = await _repo.getAll();
+      final results = await context.read<ContactRepository>().getAll();
       if (!mounted) return;
       setState(() {
         _results = results;
@@ -46,7 +45,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
 
   Future<void> _search(String query, String locale) async {
     try {
-      final results = await _repo.search(query, locale);
+      final results = await context.read<ContactRepository>().search(query, locale);
       if (!mounted) return;
       setState(() {
         _results = results;

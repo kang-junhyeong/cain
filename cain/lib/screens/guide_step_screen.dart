@@ -19,8 +19,8 @@ class GuideStepScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => GuideViewModel(
-        repository: ServiceRepository(),
+      create: (context) => GuideViewModel(
+        repository: context.read<ServiceRepository>(),
         serviceId: serviceId,
         stepIndex: stepIndex,
       )..load(),

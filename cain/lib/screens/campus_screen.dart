@@ -28,7 +28,6 @@ class CampusScreen extends StatefulWidget {
 }
 
 class _CampusScreenState extends State<CampusScreen> {
-  final _repo = BuildingRepository();
   List<Building> _buildings = [];
   bool _isLoading = true;
   bool _hasError = false;
@@ -41,7 +40,7 @@ class _CampusScreenState extends State<CampusScreen> {
 
   Future<void> _load() async {
     try {
-      final buildings = await _repo.getAll();
+      final buildings = await context.read<BuildingRepository>().getAll();
       if (!mounted) return;
       setState(() => _buildings = buildings);
     } catch (_) {
