@@ -118,6 +118,12 @@ class AppStrings {
   String get tipLabel => _t(ko: '재학생 팁', en: 'Student tip', zh: '在校生经验', bn: 'ছাত্র টিপস');
   String get helpful => _t(ko: '도움이 됐어요', en: 'Helpful', zh: '有帮助', bn: 'সহায়ক');
   String get askAgain => _t(ko: '다시 질문', en: 'Ask again', zh: '再次提问', bn: 'আবার জিজ্ঞেস করুন');
+  String aiRecommendedService(String serviceName) => _t(
+    ko: '추천 서비스: $serviceName',
+    en: 'Recommended service: $serviceName',
+    zh: '推荐服务：$serviceName',
+    bn: 'প্রস্তাবিত সেবা: $serviceName',
+  );
   String get aiUnavailable => _t(
     ko: 'AI 서비스를 일시적으로 이용할 수 없습니다.\n앱 내 안내를 확인하거나 관련 부서에 문의하세요.',
     en: 'AI service is temporarily unavailable.\nPlease check in-app guides or contact the relevant office.',

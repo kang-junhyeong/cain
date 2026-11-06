@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../app/routes.dart';
 import '../app_theme.dart';
 import '../app_strings.dart';
 import '../viewmodels/locale_provider.dart';
@@ -141,32 +140,19 @@ class _CompletionScreenState extends State<CompletionScreen> {
             // 하단 버튼
             const SizedBox(height: 16),
             ElevatedButton.icon(
-              onPressed: () => _goHome(context),
+              onPressed: () => Navigator.pop(context, 'home'),
               icon: const Icon(Icons.home, size: 18),
               label: Text(strings.goHome),
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
-              onPressed: () => _viewAgain(context),
+              onPressed: () => Navigator.pop(context, 'again'),
               icon: const Icon(Icons.refresh, size: 18),
               label: Text(strings.viewAgain),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  void _goHome(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (r) => false);
-  }
-
-  void _viewAgain(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      AppRoutes.guideStep,
-      (r) => r.settings.name == AppRoutes.home,
-      arguments: {'serviceId': widget.serviceId, 'stepIndex': 0},
     );
   }
 }

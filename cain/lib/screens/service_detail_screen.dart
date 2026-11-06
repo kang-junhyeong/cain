@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../app/routes.dart';
 import '../app_theme.dart';
 import '../app_strings.dart';
 import '../viewmodels/locale_provider.dart';
 import '../models/service.dart';
 import '../repositories/service_repository.dart';
+import 'pre_visit_screen.dart';
 
 class ServiceDetailScreen extends StatefulWidget {
   final String serviceId;
@@ -154,7 +154,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: s.steps.isEmpty ? null : () => _goToPreVisit(context, s),
+                    onPressed: s.steps.isEmpty ? null : () => _goToPreVisit(s),
                     icon: const Icon(Icons.play_arrow, size: 18),
                     label: Text(strings.startProcedure),
                     style: ElevatedButton.styleFrom(minimumSize: const Size(0, 52)),
@@ -168,12 +168,13 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
     );
   }
 
-  void _goToPreVisit(BuildContext context, ServiceModel s) {
-    Navigator.pushNamed(
+  Future<void> _goToPreVisit(ServiceModel s) async {
+    final result = await Navigator.push<String>(
       context,
-      AppRoutes.preVisit,
-      arguments: {'serviceId': s.id},
+      MaterialPageRoute(builder: (_) => PreVisitScreen(serviceId: s.id)),
     );
+    if (!mounted) return;
+    if (result == 'home') Navigator.pop(context, 'home');
   }
 
   Widget _divider() => const Divider(height: 1, color: AppTheme.divider, indent: 16, endIndent: 16);

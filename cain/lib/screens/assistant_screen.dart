@@ -85,7 +85,14 @@ class _AssistantScreenState extends State<AssistantScreen> {
                     controller: _scrollCtrl,
                     padding: const EdgeInsets.all(16),
                     itemCount: _messages.length,
-                    itemBuilder: (ctx, i) => _MessageBubble(message: _messages[i], strings: strings),
+                    itemBuilder: (ctx, i) => _MessageBubble(
+                      message: _messages[i],
+                      strings: strings,
+                      // 추천 서비스를 받는 화면은 단계 화면(S05)뿐이다.
+                      onServiceTap: widget.serviceId != null
+                          ? (id) => Navigator.pop<String>(context, id)
+                          : null,
+                    ),
                   ),
           ),
 
@@ -235,8 +242,9 @@ class _ChatMessage {
 class _MessageBubble extends StatelessWidget {
   final _ChatMessage message;
   final AppStrings strings;
+  final ValueChanged<String>? onServiceTap;
 
-  const _MessageBubble({required this.message, required this.strings});
+  const _MessageBubble({required this.message, required this.strings, this.onServiceTap});
 
   @override
   Widget build(BuildContext context) {
@@ -297,19 +305,25 @@ class _MessageBubble extends StatelessWidget {
                 children: message.references.map((ref) {
                   final kind = ref['kind'] as String? ?? 'official';
                   final label = ref['label'] as String? ?? '';
-                  return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: kind == 'official'
-                          ? AppTheme.primary.withOpacity(0.08)
-                          : AppTheme.accent.withOpacity(0.08),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      '${kind == 'official' ? strings.officialLabel : strings.tipLabel}: $label',
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: kind == 'official' ? AppTheme.primary : AppTheme.accent,
+                  final serviceId = ref['serviceId'] as String?;
+                  return GestureDetector(
+                    onTap: serviceId != null && onServiceTap != null
+                        ? () => onServiceTap!(serviceId)
+                        : null,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: kind == 'official'
+                            ? AppTheme.primary.withOpacity(0.08)
+                            : AppTheme.accent.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        '${kind == 'official' ? strings.officialLabel : strings.tipLabel}: $label',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: kind == 'official' ? AppTheme.primary : AppTheme.accent,
+                        ),
                       ),
                     ),
                   );

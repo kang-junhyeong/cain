@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../app/routes.dart';
 import '../app_theme.dart';
 import '../app_strings.dart';
 import '../viewmodels/locale_provider.dart';
 import '../models/service.dart';
 import '../repositories/service_repository.dart';
+import 'guide_step_screen.dart';
 
 class PreVisitScreen extends StatefulWidget {
   final String serviceId;
@@ -220,7 +220,7 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () => _goToSteps(context, s),
+                    onPressed: () => _goToSteps(s),
                     icon: const Icon(Icons.play_arrow, size: 18),
                     label: Text(strings.startProcedure),
                     style: ElevatedButton.styleFrom(minimumSize: const Size(0, 52)),
@@ -234,11 +234,12 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
     );
   }
 
-  void _goToSteps(BuildContext context, ServiceModel s) {
-    Navigator.pushNamed(
+  Future<void> _goToSteps(ServiceModel s) async {
+    final result = await Navigator.push<String>(
       context,
-      AppRoutes.guideStep,
-      arguments: {'serviceId': s.id, 'stepIndex': 0},
+      MaterialPageRoute(builder: (_) => GuideStepScreen(serviceId: s.id, stepIndex: 0)),
     );
+    if (!mounted) return;
+    if (result == 'home') Navigator.pop(context, 'home');
   }
 }

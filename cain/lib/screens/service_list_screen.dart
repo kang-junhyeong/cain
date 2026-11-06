@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../app/routes.dart';
 import '../app_theme.dart';
 import '../app_strings.dart';
 import '../viewmodels/locale_provider.dart';
 import '../models/service.dart';
 import '../repositories/service_repository.dart';
 import '../widgets/service_card.dart';
+import 'service_detail_screen.dart';
 
 class ServiceListScreen extends StatefulWidget {
   final String? categoryId;
@@ -90,11 +90,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                       child: ServiceCard(
                         service: _services[i],
                         locale: locale,
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          AppRoutes.serviceDetail,
-                          arguments: {'serviceId': _services[i].id},
-                        ),
+                        onTap: () => _openDetail(_services[i].id),
                       ),
                     ),
                   ),
@@ -102,5 +98,14 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
               ],
             ),
     );
+  }
+
+  Future<void> _openDetail(String serviceId) async {
+    final result = await Navigator.push<String>(
+      context,
+      MaterialPageRoute(builder: (_) => ServiceDetailScreen(serviceId: serviceId)),
+    );
+    if (!mounted) return;
+    if (result == 'home') Navigator.pop(context, 'home');
   }
 }

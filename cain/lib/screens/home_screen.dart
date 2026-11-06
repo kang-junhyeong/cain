@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../app/routes.dart';
 import '../app_theme.dart';
 import '../app_strings.dart';
 import '../viewmodels/locale_provider.dart';
@@ -8,6 +7,8 @@ import '../models/service.dart';
 import '../repositories/service_repository.dart';
 import '../widgets/service_card.dart';
 import 'assistant_screen.dart';
+import 'service_detail_screen.dart';
+import 'service_list_screen.dart';
 import '../viewmodels/home_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -45,13 +46,17 @@ class _HomeScreenState extends State<HomeScreen> {
           index: _currentTab,
           children: [
             _HomeTab(vm: _vm, searchCtrl: _searchCtrl),
-            _SearchTab(vm: _vm, searchCtrl: _searchCtrl),
+            _SearchTab(vm: _vm, searchCtrl: _searchCtrl, onGoHome: _goHomeTab),
             const _SettingsTab(),
           ],
         ),
         bottomNavigationBar: _buildBottomNav(),
       ),
     );
+  }
+
+  void _goHomeTab() {
+    if (mounted) setState(() => _currentTab = 0);
   }
 
   Widget _buildBottomNav() {
@@ -184,10 +189,11 @@ class _HomeTab extends StatelessWidget {
                     child: _CategoryButton(
                       icon: Icons.description,
                       label: strings.categoryDocuments,
-                      onTap: () => Navigator.pushNamed(
+                      onTap: () => Navigator.push(
                         context,
-                        AppRoutes.serviceList,
-                        arguments: {'categoryId': 'documents'},
+                        MaterialPageRoute(
+                          builder: (_) => const ServiceListScreen(categoryId: 'documents'),
+                        ),
                       ),
                     ),
                   ),
@@ -221,7 +227,10 @@ class _HomeTab extends StatelessWidget {
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppTheme.textPrimary),
                   ),
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, AppRoutes.serviceList),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const ServiceListScreen()),
+                    ),
                     child: Text(
                       strings.viewAll,
                       style: const TextStyle(fontSize: 13, color: AppTheme.primary, fontWeight: FontWeight.w500),
@@ -294,10 +303,9 @@ class _HomeTab extends StatelessWidget {
   }
 
   void _openDetail(BuildContext context, ServiceModel service) {
-    Navigator.pushNamed(
+    Navigator.push(
       context,
-      AppRoutes.serviceDetail,
-      arguments: {'serviceId': service.id},
+      MaterialPageRoute(builder: (_) => ServiceDetailScreen(serviceId: service.id)),
     );
   }
 }
@@ -343,7 +351,10 @@ class _AiAssistantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, AppRoutes.assistant),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const AssistantScreen()),
+      ),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -391,8 +402,9 @@ class _AiAssistantCard extends StatelessWidget {
 class _SearchTab extends StatelessWidget {
   final HomeViewModel vm;
   final TextEditingController searchCtrl;
+  final VoidCallback onGoHome;
 
-  const _SearchTab({required this.vm, required this.searchCtrl});
+  const _SearchTab({required this.vm, required this.searchCtrl, required this.onGoHome});
 
   @override
   Widget build(BuildContext context) {
@@ -444,11 +456,7 @@ class _SearchTab extends StatelessWidget {
                     child: ServiceCard(
                       service: vm.searchResults[i],
                       locale: locale,
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        AppRoutes.serviceDetail,
-                        arguments: {'serviceId': vm.searchResults[i].id},
-                      ),
+                      onTap: () => _openDetail(context, vm.searchResults[i]),
                     ),
                   ),
                 );
@@ -459,25 +467,20 @@ class _SearchTab extends StatelessWidget {
       ),
     );
   }
+
+  // 'home' 결과를 받으면 검색 탭에서 홈 탭으로 돌아간다.
+  Future<void> _openDetail(BuildContext context, ServiceModel service) async {
+    final result = await Navigator.push<String>(
+      context,
+      MaterialPageRoute(builder: (_) => ServiceDetailScreen(serviceId: service.id)),
+    );
+    if (result == 'home') onGoHome();
+  }
 }
 
 // ───────────────────── 설정 탭 ─────────────────────
 class _SettingsTab extends StatelessWidget {
   const _SettingsTab();
-
-  @override
-  Widget build(BuildContext context) {
-    // 설정 화면은 별도 파일에 구현되어 있으나 탭 내에서도 표시
-    return Navigator(
-      onGenerateRoute: (settings) => MaterialPageRoute(
-        builder: (_) => const _InlineSettingsView(),
-      ),
-    );
-  }
-}
-
-class _InlineSettingsView extends StatelessWidget {
-  const _InlineSettingsView();
 
   @override
   Widget build(BuildContext context) {

@@ -1,66 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../app/routes.dart';
 import '../app_theme.dart';
 import '../app_strings.dart';
+import '../viewmodels/guide_view_model.dart';
 import '../viewmodels/locale_provider.dart';
 import '../models/service.dart';
 import '../repositories/service_repository.dart';
 import '../widgets/step_nav_button.dart';
+import 'assistant_screen.dart';
+import 'completion_screen.dart';
 
-class GuideStepScreen extends StatefulWidget {
+class GuideStepScreen extends StatelessWidget {
   final String serviceId;
   final int stepIndex;
 
   const GuideStepScreen({super.key, required this.serviceId, required this.stepIndex});
 
   @override
-  State<GuideStepScreen> createState() => _GuideStepScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => GuideViewModel(
+        repository: ServiceRepository(),
+        serviceId: serviceId,
+        stepIndex: stepIndex,
+      )..load(),
+      child: const _GuideStepView(),
+    );
+  }
 }
 
-class _GuideStepScreenState extends State<GuideStepScreen> {
-  final _repo = ServiceRepository();
-  ServiceModel? _service;
-  bool _isLoading = true;
-  late int _currentIndex;
+class _GuideStepView extends StatefulWidget {
+  const _GuideStepView();
 
   @override
-  void initState() {
-    super.initState();
-    _currentIndex = widget.stepIndex;
-    _load();
-  }
+  State<_GuideStepView> createState() => _GuideStepViewState();
+}
 
-  Future<void> _load() async {
-    _service = await _repo.getById(widget.serviceId);
-    setState(() => _isLoading = false);
-  }
-
+class _GuideStepViewState extends State<_GuideStepView> {
   @override
   Widget build(BuildContext context) {
     final locale = context.watch<LocaleProvider>().locale;
     final strings = AppStrings(locale);
+    final vm = context.watch<GuideViewModel>();
+    final service = vm.service;
 
-    if (_isLoading) {
+    if (vm.isLoading) {
       return Scaffold(appBar: AppBar(), body: const Center(child: CircularProgressIndicator()));
     }
-    if (_service == null || _service!.steps.isEmpty) {
+    if (vm.hasError) {
+      return Scaffold(appBar: AppBar(), body: Center(child: Text(strings.error)));
+    }
+    if (service == null || service.steps.isEmpty) {
       return Scaffold(appBar: AppBar(), body: Center(child: Text(strings.noData)));
     }
 
-    final steps = _service!.steps;
-    final step = steps[_currentIndex];
+    final steps = service.steps;
+    final currentIndex = vm.currentIndex;
+    final step = steps[currentIndex];
     final total = steps.length;
-    final isLast = _currentIndex == total - 1;
+    final isLast = currentIndex == total - 1;
 
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: Text(_service!.title.resolve(locale)),
+        title: Text(service.title.resolve(locale)),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4),
           child: LinearProgressIndicator(
-            value: (_currentIndex + 1) / total,
+            value: (currentIndex + 1) / total,
             backgroundColor: AppTheme.divider,
             valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.primary),
           ),
@@ -76,7 +83,7 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
                 children: [
                   // 단계 진행 표시
                   Text(
-                    strings.stepProgress(_currentIndex + 1, total),
+                    strings.stepProgress(currentIndex + 1, total),
                     style: const TextStyle(
                       fontSize: 13,
                       color: AppTheme.primary,
@@ -111,7 +118,7 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
                           )
                         : Center(
                             child: Icon(
-                              _stepIcon(_currentIndex),
+                              _stepIcon(currentIndex),
                               size: 64,
                               color: AppTheme.primary.withOpacity(0.4),
                             ),
@@ -182,7 +189,7 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
 
                   // AI 질문 버튼
                   GestureDetector(
-                    onTap: () => _openAssistant(context, step),
+                    onTap: () => _openAssistant(step),
                     child: Container(
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
@@ -225,11 +232,11 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
 
           // 이전 / 다음 버튼
           StepNavButtons(
-            hasPrev: _currentIndex > 0,
+            hasPrev: currentIndex > 0,
             hasNext: true,
             isLast: isLast,
-            onPrev: _currentIndex > 0 ? _prevStep : null,
-            onNext: isLast ? () => _complete(context) : _nextStep,
+            onPrev: currentIndex > 0 ? vm.prev : null,
+            onNext: isLast ? _complete : vm.next,
             prevLabel: strings.prevStep,
             nextLabel: strings.nextStep,
             completeLabel: strings.complete,
@@ -239,30 +246,36 @@ class _GuideStepScreenState extends State<GuideStepScreen> {
     );
   }
 
-  void _prevStep() {
-    setState(() => _currentIndex--);
-  }
-
-  void _nextStep() {
-    setState(() => _currentIndex++);
-  }
-
-  void _complete(BuildContext context) {
-    Navigator.pushReplacementNamed(
+  // 완료 화면(S11)의 결과: 'again'이면 처음 단계로, 'home'이면 위로 전달한다.
+  Future<void> _complete() async {
+    final vm = context.read<GuideViewModel>();
+    final result = await Navigator.push<String>(
       context,
-      AppRoutes.completion,
-      arguments: {'serviceId': widget.serviceId},
+      MaterialPageRoute(builder: (_) => CompletionScreen(serviceId: vm.serviceId)),
     );
+    if (!mounted) return;
+    if (result == 'again') {
+      vm.restart();
+    } else if (result == 'home') {
+      Navigator.pop(context, 'home');
+    }
   }
 
-  void _openAssistant(BuildContext context, GuideStep step) {
-    Navigator.pushNamed(
+  // AI 화면(S09)에서 고른 추천 서비스를 돌려받는다. 단계 index는 그대로 유지된다.
+  Future<void> _openAssistant(GuideStep step) async {
+    final vm = context.read<GuideViewModel>();
+    final id = await Navigator.push<String>(
       context,
-      AppRoutes.assistant,
-      arguments: {
-        'serviceId': widget.serviceId,
-        'stepId': step.id,
-      },
+      MaterialPageRoute(
+        builder: (_) => AssistantScreen(serviceId: vm.serviceId, stepId: step.id),
+      ),
+    );
+    if (!mounted || id == null) return;
+    final locale = context.read<LocaleProvider>().locale;
+    final title = await vm.serviceTitle(id, locale);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(AppStrings(locale).aiRecommendedService(title ?? id))),
     );
   }
 

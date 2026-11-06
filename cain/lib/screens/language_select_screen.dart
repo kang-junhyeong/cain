@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../app/routes.dart';
 import '../app_theme.dart';
 import '../app_strings.dart';
 import '../viewmodels/locale_provider.dart';
@@ -129,10 +128,9 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
     );
   }
 
+  // 화면을 이동하지 않는다. LocaleProvider가 바뀌면 home이 다시 그려진다.
   Future<void> _onConfirm() async {
     if (_selected == null) return;
     await context.read<LocaleProvider>().setLocale(_selected!);
-    if (!mounted) return;
-    Navigator.pushReplacementNamed(context, AppRoutes.home);
   }
 }
