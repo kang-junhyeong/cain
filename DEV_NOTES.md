@@ -1,6 +1,6 @@
 # Cain — 개발 메모 (DEV_NOTES)
 
-> 최종 갱신: 2026-11-03
+> 최종 갱신: 2026-11-06
 > 담당: 강준형 (프론트엔드)
 > 앱명: Cain — AI 다국어 캠퍼스 생활 안내 앱 (한국기술교육대학교)
 
@@ -31,42 +31,49 @@ cain/
 │       ├── contacts.json               # 전화번호부 (현재 더미)
 │       └── buildings.json              # 건물 정보 (현재 더미)
 └── lib/
-    ├── main.dart                       # 진입점: SharedPreferences 언어 확인 → 분기
-    ├── app/
-    │   ├── app.dart                    # MaterialApp, 전체 라우팅
-    │   ├── routes.dart                 # 라우트 경로 상수
-    │   └── theme.dart                  # 색상·테마 (Primary: #1565C0, Accent: #FF8F00)
-    ├── core/
-    │   ├── models/
-    │   │   ├── localized_text.dart     # LocalizedText: resolve(locale), isFallback(locale)
-    │   │   ├── service.dart            # ServiceModel + GuideStep
-    │   │   ├── building.dart           # Building (hasCoordinates)
-    │   │   └── contact.dart            # Contact
-    │   ├── locale/
-    │   │   └── locale_provider.dart    # LocaleProvider (ChangeNotifier) + AppStrings (4개 언어)
-    │   └── repositories/
-    │       ├── service_repository.dart # getAll / getById / getByCategory / search
-    │       ├── contact_repository.dart # getAll / getById / getByIds / search
-    │       └── building_repository.dart# getAll / getById
-    ├── features/
-    │   ├── language_select/            # S01 — 첫 실행 언어 선택
-    │   ├── home/                       # S02 — 홈·검색·설정 탭 (BottomNavigationBar)
-    │   ├── guides/
-    │   │   ├── service_list_screen     # S03 — 서비스 목록 (카테고리별)
-    │   │   ├── service_detail_screen   # S04 — 서비스 상세 (위치·시간·준비물·이용 대상)
-    │   │   ├── pre_visit_screen        # S04b — 방문 전 준비 (체크리스트)
-    │   │   ├── guide_step_screen       # S05 — 단계별 안내 (진행 바·이미지·주의사항·AI 버튼)
-    │   │   └── completion_screen       # S11 — 이용 완료 (후속 안내·홈으로·다시 보기)
-    │   ├── campus/                     # S06 — 캠퍼스 지도 【보류】
-    │   ├── directory/                  # S07 — 전화번호부 (검색·전화·복사)
-    │   ├── online/                     # S08 — 교내 온라인 서비스 (외부 링크)
-    │   ├── assistant/                  # S09 — AI 챗봇 UI (서버 연동 【보류】)
-    │   └── settings/                   # S10 — 설정 (홈 탭 3번에 인라인 구현)
-    └── shared/
-        └── widgets/
-            ├── service_card.dart       # 서비스 목록 카드 (검수 배지 포함)
-            └── step_nav_button.dart    # 이전/다음/완료 버튼 세트
+    ├── main.dart                       # 앱 시작, MultiProvider 등록, CainApp(MaterialApp)
+    ├── app_theme.dart                  # 색상·테마 (Primary: #1565C0, Accent: #FF8F00)
+    ├── app_strings.dart                # AppStrings (4개 언어), AppLocale, kSupportedLocales
+    ├── models/
+    │   ├── localized_text.dart         # LocalizedText: resolve(locale), isFallback(locale)
+    │   ├── service.dart                # ServiceModel + GuideStep
+    │   ├── building.dart               # Building (hasCoordinates)
+    │   ├── contact.dart                # Contact
+    │   ├── chat_message.dart           # 화면에 표시할 채팅 메시지
+    │   └── chat_answer.dart            # AI 응답 (status, answer, references)
+    ├── services/
+    │   └── chat_api_service.dart       # POST /api/v1/chat, 상태 코드 확인, jsonDecode
+    ├── repositories/
+    │   ├── service_repository.dart     # abstract: getAll / getById / getByCategory / search
+    │   ├── local_service_repository.dart # services.json 구현
+    │   ├── contact_repository.dart     # getAll / getById / getByIds / search
+    │   ├── building_repository.dart    # getAll / getById
+    │   ├── chat_repository.dart        # abstract: ask
+    │   ├── api_chat_repository.dart    # 서버 구현
+    │   └── demo_chat_repository.dart   # 서버 없는 시연용 구현
+    ├── viewmodels/
+    │   ├── locale_provider.dart        # 언어 상태, hasSelected
+    │   ├── home_view_model.dart        # 주요 서비스, 검색
+    │   ├── guide_view_model.dart       # 단계 index, restart()
+    │   └── assistant_view_model.dart   # 메시지, 전송 상태, 오류 문구
+    ├── screens/
+    │   ├── language_select_screen.dart # S01 — 첫 실행 언어 선택
+    │   ├── home_screen.dart            # S02 — 홈·검색·설정 탭 (S10 설정은 탭 3번에 인라인 구현)
+    │   ├── service_list_screen.dart    # S03 — 서비스 목록 (카테고리별)
+    │   ├── service_detail_screen.dart  # S04 — 서비스 상세 (위치·시간·준비물·이용 대상)
+    │   ├── pre_visit_screen.dart       # S04b — 방문 전 준비 (체크리스트)
+    │   ├── guide_step_screen.dart      # S05 — 단계별 안내 (진행 바·이미지·주의사항·AI 버튼)
+    │   ├── campus_screen.dart          # S06 — 캠퍼스 지도 【보류】
+    │   ├── directory_screen.dart       # S07 — 전화번호부 (검색·전화·복사)
+    │   ├── online_screen.dart          # S08 — 교내 온라인 서비스 (외부 링크)
+    │   ├── assistant_screen.dart       # S09 — AI 챗봇 (서버 연동 【보류】, 기본은 Demo)
+    │   └── completion_screen.dart      # S11 — 이용 완료 (후속 안내·홈으로·다시 보기)
+    └── widgets/
+        ├── service_card.dart           # 서비스 목록 카드 (검수 배지 포함)
+        └── step_nav_button.dart        # 이전/다음/완료 버튼 세트
 ```
+
+폴더별 규칙은 저장소 루트의 `CLAUDE.md`를 따른다.
 
 ---
 
@@ -123,9 +130,9 @@ flutter run
 
 ## 4. 보류 목록
 
-### 4-1. 캠퍼스 지도 (S06) — `lib/features/campus/campus_screen.dart`
+### 4-1. 캠퍼스 지도 (S06) — `lib/screens/campus_screen.dart`
 
-**상태:** 파일 존재, 라우트와 import 주석 처리, 건물 목록 폴백 화면만 동작
+**상태:** 파일 존재, 어느 화면에서도 열지 않음, 건물 목록 폴백 화면만 동작
 **재개 조건:**
 
 - [ ] 지도 방식 결정
@@ -138,27 +145,31 @@ flutter run
 
 ```
 pubspec.yaml                    — google_maps_flutter 주석 해제 / assets/maps/ 주석 해제
-lib/app/routes.dart             — campus 라우트 주석 해제
-lib/app/app.dart                — campus import 주석 해제, case 주석 해제
-lib/features/campus/            — 실제 지도 위젯 구현
+lib/screens/home_screen.dart    — 캠퍼스 시설 버튼에서 Navigator.push로 CampusScreen 열기
+lib/screens/campus_screen.dart  — 실제 지도 위젯 구현
 assets/data/buildings.json      — latitude, longitude 입력
 ```
 
 ---
 
-### 4-2. AI 챗봇 서버 연동 (S09) — `lib/features/assistant/assistant_screen.dart`
+### 4-2. AI 챗봇 서버 연동 (S09) — `lib/screens/assistant_screen.dart`
 
-**상태:** UI 완성, `_sendMessage()` 내 HTTP 코드 전체 주석 처리, 더미 응답 반환 중
+**상태:** UI와 호출 계층 완성, 기본 실행은 `DemoChatRepository` 사용
 **재개 조건:**
 
 - [ ] FastAPI 서버 배포 URL 확정 (담당: 윤우성)
-- [ ] `assistant_screen.dart` 상단 `_kApiBase` 상수에 실제 URL 입력
-- [ ] `http` 패키지 import 주석 해제 (`pubspec.yaml`에 이미 선언됨)
-- [ ] `_sendMessage()` 내 주석 블록 해제 및 더미 코드 삭제
+- [ ] 코드 수정 없이 아래 명령으로 실행 (서버 주소는 커밋하지 않음)
+
+```bash
+flutter run --dart-define=CAIN_API_BASE=주소
+```
+
+`CAIN_API_BASE`가 비어 있으면 `DemoChatRepository`, 값이 있으면 `ApiChatRepository`를 쓴다.
+Demo는 질문에 `error`나 `오류`가 들어가면 예외를 던져 오류 화면을 시연할 수 있다.
 
 **API 계약:** `기획/개발 기획서.md` 섹션 06·07 참조
 
-**오류 처리 구현 범위 (주석 내 포함):**
+**오류 처리 구현 범위:**
 
 | HTTP 코드 | 동작 |
 |-----------|------|
@@ -167,7 +178,7 @@ assets/data/buildings.json      — latitude, longitude 입력
 | 409 CONTENT_VERSION_MISMATCH | 앱 업데이트 안내 |
 | 429 RATE_LIMITED | 잠시 후 재시도 안내 |
 | 502/503 AI_UNAVAILABLE | 로컬 안내 이용 권장 |
-| Timeout (30s) | 재시도 버튼 |
+| Timeout (30s) | 재시도 안내 |
 
 ---
 
@@ -193,7 +204,7 @@ assets/data/buildings.json      — latitude, longitude 입력
 모든 건물의 `latitude`, `longitude`, `imagePath`가 `null`.
 지도 구현 재개 시 함께 업데이트 필요.
 
-### `lib/features/online/online_screen.dart`
+### `lib/screens/online_screen.dart`
 
 `_kServices` 상수의 각 `url` 필드가 `"TODO: ..."` 상태.
 실제 한기대 공식 URL 확인 후 입력 필요.
@@ -203,7 +214,7 @@ assets/data/buildings.json      — latitude, longitude 입력
 ## 6. 팀 계약
 
 ### 모델 계약
-`lib/core/models/` 내 클래스 이름·필드·ID 변경은 3인 사전 합의 필요.
+`lib/models/` 내 클래스 이름·필드·ID 변경은 3인 사전 합의 필요.
 
 ### 데이터 계약
 - `cain/assets/data/` = 앱 배포용 원본
@@ -212,9 +223,9 @@ assets/data/buildings.json      — latitude, longitude 입력
 - 버전 불일치 시 서버가 409 반환 → 앱은 업데이트 안내
 
 ### 화면 계약
-- 화면 이동 시 `serviceId`, `stepId`를 `arguments` Map으로 전달
-- AI 화면 진입 후 pop 시 원래 단계(`stepIndex`)와 체크 상태는 `GuideStepScreen`이 자체 유지
-- `completion_screen`에서 홈으로 이동 시 전체 스택 제거 (`pushNamedAndRemoveUntil`)
+- 화면 이동은 생성자 전달 + `pop<T>` 결과로 값을 주고받는다 (`Navigator.push<T>(MaterialPageRoute)`)
+- AI 화면(S09)은 S05에서 `await Navigator.push<String>`으로 연다. 추천 서비스를 탭하면 `pop<String>(serviceId)`로 돌려주고, 단계 index는 `GuideViewModel`이 유지한다
+- `completion_screen`은 `pop(context, 'home')` 또는 `pop(context, 'again')`을 돌려준다. `guide_step`은 'again'이면 `restart()`, 'home'이면 위로 전달하고, `pre_visit`, `service_detail`, `service_list`도 'home'을 위로 전달한다
 
 ### API 계약
 `기획/개발 기획서.md` 섹션 06·07 준수.
@@ -230,8 +241,11 @@ assets/data/buildings.json      — latitude, longitude 입력
 
 ```
 앱 시작
+  ├─ LocaleProvider 로드 전 → 로딩 화면
   ├─ 저장된 언어 없음 → LanguageSelectScreen (S01)
   └─ 저장된 언어 있음 → HomeScreen (S02)
+
+MaterialApp은 home 하나다. 언어를 선택하면 LocaleProvider 상태가 바뀌어 home이 다시 그려진다.
 
 HomeScreen (탭)
   ├─ [홈 탭]
@@ -252,12 +266,14 @@ PreVisitScreen (S04b)
 GuideStepScreen (S05)
   ├─ 이전/다음 버튼 → 같은 화면, stepIndex 변경
   ├─ AI 질문 버튼 → AssistantScreen (S09, serviceId + stepId 컨텍스트)
-  │   └─ pop → GuideStepScreen 복귀 (상태 유지)
-  └─ 마지막 단계 완료 → CompletionScreen (S11) [스택 교체]
+  │   ├─ pop → GuideStepScreen 복귀 (상태 유지)
+  │   └─ 추천 서비스 탭 → pop<String>(serviceId) → SnackBar 표시 (상태 유지)
+  └─ 마지막 단계 완료 → await push<String> CompletionScreen (S11)
 
 CompletionScreen (S11)
-  ├─ 홈으로 → HomeScreen [전체 스택 제거]
-  └─ 다시 보기 → GuideStepScreen (stepIndex: 0) [홈 위에 유지]
+  ├─ 홈으로 → pop('home') → 각 화면이 'home'을 위로 전달 → HomeScreen
+  ├─ 다시 보기 → pop('again') → GuideStepScreen restart() (stepIndex: 0)
+  └─ 뒤로가기 → GuideStepScreen 마지막 단계로 복귀
 ```
 
 ---
@@ -268,3 +284,4 @@ CompletionScreen (S11)
 |------|------|------|
 | 2026-11-03 | v0.1.0 | 전체 초기 구현 (31개 파일) |
 | 2026-11-03 | v0.1.1 | 1차 코드 검토 후 9개 문제 수정, DEV_NOTES 재작성 |
+| 2026-11-06 | v0.2.0 | 구조 정렬: 폴더 구조 변경, 화면 이동을 생성자 전달 + pop 결과로 변경, ViewModel 수명과 Repository 공유 정리, AI 호출 계층 분리 + Demo 구현, 질문 입력 Form 검증 |
