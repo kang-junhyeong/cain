@@ -7,6 +7,8 @@ import '../repositories/chat_repository.dart';
 import '../viewmodels/assistant_view_model.dart';
 import '../viewmodels/locale_provider.dart';
 
+const int _kMaxQuestionLength = 300;
+
 class AssistantScreen extends StatelessWidget {
   final String? serviceId;
   final String? stepId;
@@ -37,6 +39,7 @@ class _AssistantView extends StatefulWidget {
 }
 
 class _AssistantViewState extends State<_AssistantView> {
+  final _formKey = GlobalKey<FormState>();
   final _inputCtrl = TextEditingController();
   final _scrollCtrl = ScrollController();
 
@@ -95,41 +98,63 @@ class _AssistantViewState extends State<_AssistantView> {
                   ),
           ),
 
+          // 전송 중 표시
+          if (vm.isSending) const LinearProgressIndicator(),
+
+          // 오류 문구
+          if (vm.errorMessage != null)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              color: Colors.white,
+              child: Text(
+                vm.errorMessage!,
+                style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.error),
+              ),
+            ),
+
           // 입력창
           Container(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             color: Colors.white,
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _inputCtrl,
-                    decoration: InputDecoration(
-                      hintText: strings.assistantHint,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            child: Form(
+              key: _formKey,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _inputCtrl,
+                      decoration: InputDecoration(
+                        hintText: strings.assistantHint,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                      ),
+                      validator: (value) {
+                        final text = value?.trim() ?? '';
+                        if (text.isEmpty) return strings.questionEmpty;
+                        if (text.length > _kMaxQuestionLength) {
+                          return strings.questionTooLong(_kMaxQuestionLength);
+                        }
+                        return null;
+                      },
+                      onFieldSubmitted: (_) => _submit(),
                     ),
-                    onSubmitted: (_) => _submit(),
                   ),
-                ),
-                const SizedBox(width: 10),
-                GestureDetector(
-                  onTap: vm.isSending ? null : _submit,
-                  child: Container(
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: vm.isSending ? AppTheme.textSecondary : AppTheme.primary,
-                      shape: BoxShape.circle,
+                  const SizedBox(width: 10),
+                  IconButton.filled(
+                    onPressed: vm.isSending ? null : _submit,
+                    icon: const Icon(Icons.send, size: 20),
+                    style: IconButton.styleFrom(
+                      backgroundColor: AppTheme.primary,
+                      foregroundColor: Colors.white,
+                      disabledBackgroundColor: AppTheme.textSecondary,
+                      disabledForegroundColor: Colors.white,
+                      fixedSize: const Size(44, 44),
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    child: vm.isSending
-                        ? const Padding(
-                            padding: EdgeInsets.all(10),
-                            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                          )
-                        : const Icon(Icons.send, color: Colors.white, size: 20),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -139,9 +164,10 @@ class _AssistantViewState extends State<_AssistantView> {
 
   Future<void> _submit() async {
     final vm = context.read<AssistantViewModel>();
-    final text = _inputCtrl.text.trim();
-    if (text.isEmpty || vm.isSending) return;
+    if (vm.isSending) return;
+    if (!_formKey.currentState!.validate()) return;
 
+    final text = _inputCtrl.text.trim();
     _inputCtrl.clear();
     final sending = vm.send(text, context.read<LocaleProvider>().locale);
     _scrollToBottom();

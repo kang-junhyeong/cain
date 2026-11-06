@@ -118,6 +118,18 @@ class AppStrings {
   String get tipLabel => _t(ko: '재학생 팁', en: 'Student tip', zh: '在校生经验', bn: 'ছাত্র টিপস');
   String get helpful => _t(ko: '도움이 됐어요', en: 'Helpful', zh: '有帮助', bn: 'সহায়ক');
   String get askAgain => _t(ko: '다시 질문', en: 'Ask again', zh: '再次提问', bn: 'আবার জিজ্ঞেস করুন');
+  String get questionEmpty => _t(
+    ko: '질문을 입력해 주세요.',
+    en: 'Please enter your question.',
+    zh: '请输入问题。',
+    bn: 'অনুগ্রহ করে আপনার প্রশ্ন লিখুন।',
+  );
+  String questionTooLong(int max) => _t(
+    ko: '질문은 $max자 이내로 입력해 주세요.',
+    en: 'Please keep your question within $max characters.',
+    zh: '问题请控制在$max字以内。',
+    bn: 'অনুগ্রহ করে প্রশ্নটি $max অক্ষরের মধ্যে লিখুন।',
+  );
   String get aiVersionMismatch => _t(
     ko: '앱 데이터 버전이 맞지 않습니다. 앱을 업데이트해 주세요.',
     en: 'App data version does not match. Please update the app.',
