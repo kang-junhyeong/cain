@@ -118,6 +118,36 @@ class AppStrings {
   String get tipLabel => _t(ko: '재학생 팁', en: 'Student tip', zh: '在校生经验', bn: 'ছাত্র টিপস');
   String get helpful => _t(ko: '도움이 됐어요', en: 'Helpful', zh: '有帮助', bn: 'সহায়ক');
   String get askAgain => _t(ko: '다시 질문', en: 'Ask again', zh: '再次提问', bn: 'আবার জিজ্ঞেস করুন');
+  String get aiVersionMismatch => _t(
+    ko: '앱 데이터 버전이 맞지 않습니다. 앱을 업데이트해 주세요.',
+    en: 'App data version does not match. Please update the app.',
+    zh: '应用数据版本不一致，请更新应用。',
+    bn: 'অ্যাপের ডেটা সংস্করণ মিলছে না। অনুগ্রহ করে অ্যাপ আপডেট করুন।',
+  );
+  String get aiRateLimited => _t(
+    ko: '잠시 후 다시 질문해 주세요.',
+    en: 'Please try asking again in a moment.',
+    zh: '请稍后再提问。',
+    bn: 'অনুগ্রহ করে কিছুক্ষণ পরে আবার জিজ্ঞেস করুন।',
+  );
+  String get aiTimeout => _t(
+    ko: '응답 시간이 초과되었습니다. 다시 시도해 주세요.',
+    en: 'The request timed out. Please try again.',
+    zh: '请求超时，请重试。',
+    bn: 'অনুরোধের সময় শেষ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।',
+  );
+  String demoAnswer(String serviceName, String location, String hours) => _t(
+    ko: '[데모 응답] $serviceName 안내입니다.\n이용 장소: $location\n운영시간: $hours',
+    en: '[Demo reply] Here is the guide for $serviceName.\nLocation: $location\nHours: $hours',
+    zh: '[演示回复] 这是$serviceName的指南。\n使用地点：$location\n运营时间：$hours',
+    bn: '[ডেমো উত্তর] $serviceName গাইড।\nঅবস্থান: $location\nসময়সূচি: $hours',
+  );
+  String get demoNoMatch => _t(
+    ko: '[데모 응답] 질문에 맞는 서비스를 찾지 못했습니다.\n앱 내 안내를 확인하거나 관련 부서에 문의하세요.',
+    en: '[Demo reply] No matching service was found.\nPlease check in-app guides or contact the relevant office.',
+    zh: '[演示回复] 未找到相关服务。\n请查看应用内指南或联系相关部门。',
+    bn: '[ডেমো উত্তর] মিল থাকা কোনো সেবা পাওয়া যায়নি।\nঅ্যাপ গাইড দেখুন বা সংশ্লিষ্ট অফিসে যোগাযোগ করুন।',
+  );
   String aiRecommendedService(String serviceName) => _t(
     ko: '추천 서비스: $serviceName',
     en: 'Recommended service: $serviceName',

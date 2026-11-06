@@ -1,46 +1,44 @@
-// TODO(AI 보류): FastAPI 서버 배포 후 HTTP 호출 코드 활성화
-//
-// 현재 상태:
-//   - UI 구조 완성
-//   - HTTP 호출 코드 전체 주석 처리
-//   - 더미 응답으로 대체 동작
-//
-// 재개 조건:
-//   1. FastAPI 서버 배포 URL 확정 (윤우성)
-//   2. 아래 _kApiBase 에 실제 서버 URL 입력
-//   3. _sendMessage() 내 주석 해제
-//   4. 실제 테스트 후 오류 처리 확인
-//
-// API 계약: DEV_NOTES.md 및 개발 기획서.md 섹션 06·07 참조
-
-import 'dart:convert';
-// import 'package:http/http.dart' as http; // TODO(AI 보류): 활성화
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../app_theme.dart';
 import '../app_strings.dart';
+import '../models/chat_message.dart';
+import '../repositories/chat_repository.dart';
+import '../viewmodels/assistant_view_model.dart';
 import '../viewmodels/locale_provider.dart';
 
-// TODO(AI 보류): 서버 배포 후 실제 URL로 교체
-const String _kApiBase = 'TODO: https://your-server.com';
-const String _kContentVersion = '2026.11.03.1';
-
-class AssistantScreen extends StatefulWidget {
+class AssistantScreen extends StatelessWidget {
   final String? serviceId;
   final String? stepId;
 
   const AssistantScreen({super.key, this.serviceId, this.stepId});
 
   @override
-  State<AssistantScreen> createState() => _AssistantScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => AssistantViewModel(
+        repository: context.read<ChatRepository>(),
+        serviceId: serviceId,
+        stepId: stepId,
+      ),
+      child: _AssistantView(serviceId: serviceId, stepId: stepId),
+    );
+  }
 }
 
-class _AssistantScreenState extends State<AssistantScreen> {
+class _AssistantView extends StatefulWidget {
+  final String? serviceId;
+  final String? stepId;
+
+  const _AssistantView({this.serviceId, this.stepId});
+
+  @override
+  State<_AssistantView> createState() => _AssistantViewState();
+}
+
+class _AssistantViewState extends State<_AssistantView> {
   final _inputCtrl = TextEditingController();
   final _scrollCtrl = ScrollController();
-  final List<_ChatMessage> _messages = [];
-  bool _isSending = false;
 
   @override
   void dispose() {
@@ -53,6 +51,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
   Widget build(BuildContext context) {
     final locale = context.watch<LocaleProvider>().locale;
     final strings = AppStrings(locale);
+    final vm = context.watch<AssistantViewModel>();
 
     return Scaffold(
       appBar: AppBar(title: Text(strings.assistantTitle)),
@@ -79,14 +78,14 @@ class _AssistantScreenState extends State<AssistantScreen> {
 
           // 메시지 목록
           Expanded(
-            child: _messages.isEmpty
+            child: vm.messages.isEmpty
                 ? _EmptyState(strings: strings)
                 : ListView.builder(
                     controller: _scrollCtrl,
                     padding: const EdgeInsets.all(16),
-                    itemCount: _messages.length,
+                    itemCount: vm.messages.length,
                     itemBuilder: (ctx, i) => _MessageBubble(
-                      message: _messages[i],
+                      message: vm.messages[i],
                       strings: strings,
                       // 추천 서비스를 받는 화면은 단계 화면(S05)뿐이다.
                       onServiceTap: widget.serviceId != null
@@ -109,20 +108,20 @@ class _AssistantScreenState extends State<AssistantScreen> {
                       hintText: strings.assistantHint,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                     ),
-                    onSubmitted: (_) => _sendMessage(locale, strings),
+                    onSubmitted: (_) => _submit(),
                   ),
                 ),
                 const SizedBox(width: 10),
                 GestureDetector(
-                  onTap: _isSending ? null : () => _sendMessage(locale, strings),
+                  onTap: vm.isSending ? null : _submit,
                   child: Container(
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      color: _isSending ? AppTheme.textSecondary : AppTheme.primary,
+                      color: vm.isSending ? AppTheme.textSecondary : AppTheme.primary,
                       shape: BoxShape.circle,
                     ),
-                    child: _isSending
+                    child: vm.isSending
                         ? const Padding(
                             padding: EdgeInsets.all(10),
                             child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
@@ -138,77 +137,16 @@ class _AssistantScreenState extends State<AssistantScreen> {
     );
   }
 
-  Future<void> _sendMessage(String locale, AppStrings strings) async {
+  Future<void> _submit() async {
+    final vm = context.read<AssistantViewModel>();
     final text = _inputCtrl.text.trim();
-    if (text.isEmpty || _isSending) return;
+    if (text.isEmpty || vm.isSending) return;
 
     _inputCtrl.clear();
-    setState(() {
-      _messages.add(_ChatMessage(text: text, isUser: true));
-      _isSending = true;
-    });
+    final sending = vm.send(text, context.read<LocaleProvider>().locale);
     _scrollToBottom();
-
-    // ─────────────────────────────────────────────────────────────────
-    // TODO(AI 보류): 아래 주석을 해제하고 더미 응답 코드를 삭제하세요
-    // ─────────────────────────────────────────────────────────────────
-    //
-    // try {
-    //   final response = await http.post(
-    //     Uri.parse('$_kApiBase/api/v1/chat'),
-    //     headers: {'Content-Type': 'application/json'},
-    //     body: jsonEncode({
-    //       'question': text,
-    //       'locale': locale,
-    //       'contentVersion': _kContentVersion,
-    //       'context': {
-    //         'serviceId': widget.serviceId,
-    //         'stepId': widget.stepId,
-    //       },
-    //     }),
-    //   ).timeout(const Duration(seconds: 30));
-    //
-    //   if (response.statusCode == 200) {
-    //     final data = jsonDecode(response.body) as Map<String, dynamic>;
-    //     final status = data['status'] as String;
-    //     final answer = data['answer'] as String? ?? strings.aiUnavailable;
-    //     final refs = (data['references'] as List<dynamic>? ?? []);
-    //
-    //     setState(() {
-    //       _messages.add(_ChatMessage(
-    //         text: answer,
-    //         isUser: false,
-    //         status: status,
-    //         references: refs.cast<Map<String, dynamic>>(),
-    //       ));
-    //     });
-    //   } else if (response.statusCode == 409) {
-    //     setState(() => _messages.add(_ChatMessage(text: '앱 데이터 버전이 맞지 않습니다. 앱을 업데이트해 주세요.', isUser: false)));
-    //   } else if (response.statusCode == 429) {
-    //     setState(() => _messages.add(_ChatMessage(text: '잠시 후 다시 질문해 주세요.', isUser: false)));
-    //   } else {
-    //     setState(() => _messages.add(_ChatMessage(text: strings.aiUnavailable, isUser: false)));
-    //   }
-    // } on TimeoutException {
-    //   setState(() => _messages.add(_ChatMessage(text: strings.aiUnavailable, isUser: false)));
-    // } catch (e) {
-    //   setState(() => _messages.add(_ChatMessage(text: strings.aiUnavailable, isUser: false)));
-    // }
-
-    // 더미 응답 (서버 연동 전까지 임시 사용)
-    await Future.delayed(const Duration(milliseconds: 800));
-    setState(() {
-      _messages.add(_ChatMessage(
-        text: '[서버 미연결] AI 기능은 서버 배포 후 이용할 수 있습니다.\n\n'
-            'In-app guides are available now. Please check the step-by-step guide for your service.',
-        isUser: false,
-        status: 'insufficient_evidence',
-        references: const [],
-      ));
-    });
-    // ─────────────────────────────────────────────────────────────────
-
-    setState(() => _isSending = false);
+    await sending;
+    if (!mounted) return;
     _scrollToBottom();
   }
 
@@ -225,22 +163,8 @@ class _AssistantScreenState extends State<AssistantScreen> {
   }
 }
 
-class _ChatMessage {
-  final String text;
-  final bool isUser;
-  final String? status;
-  final List<Map<String, dynamic>> references;
-
-  const _ChatMessage({
-    required this.text,
-    required this.isUser,
-    this.status,
-    this.references = const [],
-  });
-}
-
 class _MessageBubble extends StatelessWidget {
-  final _ChatMessage message;
+  final ChatMessage message;
   final AppStrings strings;
   final ValueChanged<String>? onServiceTap;
 

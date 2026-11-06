@@ -1,23 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'app_theme.dart';
+import 'repositories/api_chat_repository.dart';
 import 'repositories/building_repository.dart';
+import 'repositories/chat_repository.dart';
 import 'repositories/contact_repository.dart';
+import 'repositories/demo_chat_repository.dart';
+import 'repositories/local_service_repository.dart';
 import 'repositories/service_repository.dart';
 import 'screens/home_screen.dart';
 import 'screens/language_select_screen.dart';
+import 'services/chat_api_service.dart';
 import 'viewmodels/locale_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
+  const apiBase = String.fromEnvironment('CAIN_API_BASE');
+  final ServiceRepository serviceRepository = LocalServiceRepository();
+  final ChatRepository chatRepository = apiBase.isEmpty
+      ? DemoChatRepository(serviceRepository: serviceRepository)
+      : ApiChatRepository(service: ChatApiService(baseUrl: apiBase));
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LocaleProvider()..load()),
-        Provider<ServiceRepository>.value(value: ServiceRepository()),
+        Provider<ServiceRepository>.value(value: serviceRepository),
         Provider<ContactRepository>.value(value: ContactRepository()),
         Provider<BuildingRepository>.value(value: BuildingRepository()),
+        Provider<ChatRepository>.value(value: chatRepository),
       ],
       child: const CainApp(),
     ),
