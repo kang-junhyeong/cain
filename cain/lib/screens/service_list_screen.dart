@@ -21,6 +21,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
   final _repo = ServiceRepository();
   List<ServiceModel> _services = [];
   bool _isLoading = true;
+  bool _hasError = false;
 
   @override
   void initState() {
@@ -29,13 +30,18 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
   }
 
   Future<void> _load() async {
-    setState(() => _isLoading = true);
-    if (widget.categoryId != null) {
-      _services = await _repo.getByCategory(widget.categoryId!);
-    } else {
-      _services = await _repo.getAll();
+    try {
+      final services = widget.categoryId != null
+          ? await _repo.getByCategory(widget.categoryId!)
+          : await _repo.getAll();
+      if (!mounted) return;
+      setState(() => _services = services);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _hasError = true);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
-    setState(() => _isLoading = false);
   }
 
   @override
@@ -55,7 +61,9 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
       backgroundColor: AppTheme.background,
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : Column(
+          : _hasError
+              ? Center(child: Text(strings.error))
+              : Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),

@@ -20,6 +20,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
   final _searchCtrl = TextEditingController();
   List<Contact> _results = [];
   bool _isLoading = true;
+  bool _hasError = false;
 
   @override
   void initState() {
@@ -28,8 +29,33 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
   }
 
   Future<void> _loadAll() async {
-    _results = await _repo.getAll();
-    setState(() => _isLoading = false);
+    try {
+      final results = await _repo.getAll();
+      if (!mounted) return;
+      setState(() {
+        _results = results;
+        _hasError = false;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _hasError = true);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _search(String query, String locale) async {
+    try {
+      final results = await _repo.search(query, locale);
+      if (!mounted) return;
+      setState(() {
+        _results = results;
+        _hasError = false;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _hasError = true);
+    }
   }
 
   @override
@@ -52,10 +78,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
             child: TextField(
               controller: _searchCtrl,
-              onChanged: (v) async {
-                final results = await _repo.search(v, locale);
-                setState(() => _results = results);
-              },
+              onChanged: (v) => _search(v, locale),
               decoration: InputDecoration(
                 hintText: strings.searchDept,
                 prefixIcon: const Icon(Icons.search, color: AppTheme.textSecondary),
@@ -74,6 +97,8 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
+                : _hasError
+                    ? Center(child: Text(strings.error))
                 : _results.isEmpty
                     ? Center(child: Text(strings.noData))
                     : ListView.builder(

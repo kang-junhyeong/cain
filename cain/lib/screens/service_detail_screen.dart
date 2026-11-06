@@ -20,6 +20,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
   final _repo = ServiceRepository();
   ServiceModel? _service;
   bool _isLoading = true;
+  bool _hasError = false;
 
   @override
   void initState() {
@@ -28,8 +29,16 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
   }
 
   Future<void> _load() async {
-    _service = await _repo.getById(widget.serviceId);
-    setState(() => _isLoading = false);
+    try {
+      final service = await _repo.getById(widget.serviceId);
+      if (!mounted) return;
+      setState(() => _service = service);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _hasError = true);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -39,6 +48,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
 
     if (_isLoading) {
       return Scaffold(appBar: AppBar(), body: const Center(child: CircularProgressIndicator()));
+    }
+    if (_hasError) {
+      return Scaffold(appBar: AppBar(), body: Center(child: Text(strings.error)));
     }
     if (_service == null) {
       return Scaffold(appBar: AppBar(), body: Center(child: Text(strings.noData)));

@@ -18,11 +18,26 @@ class CompletionScreen extends StatefulWidget {
 class _CompletionScreenState extends State<CompletionScreen> {
   final _repo = ServiceRepository();
   ServiceModel? _service;
+  bool _isLoading = true;
+  bool _hasError = false;
 
   @override
   void initState() {
     super.initState();
-    _repo.getById(widget.serviceId).then((s) => setState(() => _service = s));
+    _load();
+  }
+
+  Future<void> _load() async {
+    try {
+      final service = await _repo.getById(widget.serviceId);
+      if (!mounted) return;
+      setState(() => _service = service);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _hasError = true);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -30,6 +45,10 @@ class _CompletionScreenState extends State<CompletionScreen> {
     final locale = context.watch<LocaleProvider>().locale;
     final strings = AppStrings(locale);
     final s = _service;
+
+    if (_isLoading) {
+      return Scaffold(appBar: AppBar(), body: const Center(child: CircularProgressIndicator()));
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(strings.complete)),
@@ -69,7 +88,7 @@ class _CompletionScreenState extends State<CompletionScreen> {
                   Text(
                     s != null
                         ? strings.completionMessage(s.title.resolve(locale))
-                        : strings.completionTitle,
+                        : (_hasError ? strings.error : strings.completionTitle),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 14,

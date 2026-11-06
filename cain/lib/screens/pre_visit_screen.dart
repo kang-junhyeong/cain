@@ -20,6 +20,7 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
   final _repo = ServiceRepository();
   ServiceModel? _service;
   bool _isLoading = true;
+  bool _hasError = false;
   final Map<String, bool> _checks = {};
 
   @override
@@ -29,13 +30,23 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
   }
 
   Future<void> _load() async {
-    _service = await _repo.getById(widget.serviceId);
-    if (_service != null) {
-      for (final step in _service!.steps) {
-        _checks[step.id] = false;
-      }
+    try {
+      final service = await _repo.getById(widget.serviceId);
+      if (!mounted) return;
+      setState(() {
+        _service = service;
+        if (service != null) {
+          for (final step in service.steps) {
+            _checks[step.id] = false;
+          }
+        }
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _hasError = true);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
-    setState(() => _isLoading = false);
   }
 
   @override
@@ -45,6 +56,9 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
 
     if (_isLoading) {
       return Scaffold(appBar: AppBar(), body: const Center(child: CircularProgressIndicator()));
+    }
+    if (_hasError) {
+      return Scaffold(appBar: AppBar(), body: Center(child: Text(strings.error)));
     }
     if (_service == null) {
       return Scaffold(appBar: AppBar(), body: Center(child: Text(strings.noData)));

@@ -31,14 +31,25 @@ class _CampusScreenState extends State<CampusScreen> {
   final _repo = BuildingRepository();
   List<Building> _buildings = [];
   bool _isLoading = true;
+  bool _hasError = false;
 
   @override
   void initState() {
     super.initState();
-    _repo.getAll().then((b) => setState(() {
-          _buildings = b;
-          _isLoading = false;
-        }));
+    _load();
+  }
+
+  Future<void> _load() async {
+    try {
+      final buildings = await _repo.getAll();
+      if (!mounted) return;
+      setState(() => _buildings = buildings);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _hasError = true);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -51,7 +62,9 @@ class _CampusScreenState extends State<CampusScreen> {
       backgroundColor: AppTheme.background,
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : _CampusFallback(buildings: _buildings, locale: locale, strings: strings),
+          : _hasError
+              ? Center(child: Text(strings.error))
+              : _CampusFallback(buildings: _buildings, locale: locale, strings: strings),
     );
   }
 }
