@@ -1,12 +1,3 @@
-// API 키는 cain/env.json에서 읽는다 (Git 제외 파일, env.example.json 참고)
-val envJson = rootProject.file("../env.json")
-@Suppress("UNCHECKED_CAST")
-val envKeys: Map<String, Any?> = if (envJson.exists()) {
-    groovy.json.JsonSlurper().parse(envJson) as Map<String, Any?>
-} else {
-    emptyMap()
-}
-
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -36,7 +27,6 @@ android {
         // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        manifestPlaceholders["MAPS_API_KEY"] = envKeys["MAPS_API_KEY"]?.toString() ?: ""
     }
 
     buildTypes {

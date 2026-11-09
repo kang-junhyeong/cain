@@ -31,7 +31,6 @@
         "id": "step_enroll_01",
         "serviceId": "certificate_enrollment",
         "order": 1,
-        "buildingId": "student_union",
         "title": { "ko": "학생회관 1층으로 이동", "en": "Go to 1F of Student Union", "zh": "前往学生会馆1楼", "bn": "স্টুডেন্ট ইউনিয়নের ১ম তলায় যান" },
         "body": { "ko": "학생회관 건물 1층에 위치한 무인발급기 앞으로 이동하세요. 정문에서 도보 약 5분 거리입니다.", "en": "Go to the self-service kiosk on the 1st floor of the Student Union building, approximately 5 minutes walk from the main gate.", "zh": "前往学生会馆1楼的自助发证机前。距正门步行约5分钟。", "bn": "স্টুডেন্ট ইউনিয়ন বিল্ডিংয়ের ১ম তলায় সেলফ-সার্ভিস কিওস্কে যান। মূল গেট থেকে প্রায় ৫ মিনিটের হাঁটা পথ।" },
         "caution": null
