@@ -2,6 +2,7 @@ import '../app_strings.dart';
 import '../models/chat_answer.dart';
 import '../models/service.dart';
 import 'chat_repository.dart';
+import 'demo_chat_scripts.dart';
 import 'service_repository.dart';
 
 /// 서버 없이 시연할 때 쓰는 구현.
@@ -25,6 +26,10 @@ class DemoChatRepository implements ChatRepository {
     if (lower.contains('error') || lower.contains('오류')) {
       throw Exception('demo error');
     }
+
+    // 시연 영상용 고정 대화가 있으면 그 답을 쓴다.
+    final scripted = DemoChatScripts.match(question);
+    if (scripted != null) return scripted;
 
     final strings = AppStrings(locale);
     final service = await _findService(lower, locale, serviceId);

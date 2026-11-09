@@ -88,25 +88,13 @@ class _HomeTab extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          const Text(
-                            'Campus ',
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w800,
-                              color: AppTheme.primary,
-                            ),
-                          ),
-                          const Text(
-                            'Guide',
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w800,
-                              color: AppTheme.textPrimary,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        strings.appName,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: AppTheme.primary,
+                        ),
                       ),
                       Text(
                         strings.appSubtitle,

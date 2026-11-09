@@ -133,13 +133,14 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
                   ),
                   const SizedBox(height: 12),
 
-                  // 준비물 체크리스트
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
+                  // 준비물 체크리스트 (ListTile 터치 효과가 보이도록 Material로 배경을 칠한다)
+                  Material(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: AppTheme.divider),
+                      side: const BorderSide(color: AppTheme.divider),
                     ),
+                    clipBehavior: Clip.antiAlias,
                     child: Column(
                       children: checklistItems.asMap().entries.map((entry) {
                         final i = entry.key;
