@@ -58,7 +58,8 @@
         "order": 4,
         "title": { "ko": "증명서 수령", "en": "Receive certificate", "zh": "领取证书", "bn": "সার্টিফিকেট গ্রহণ করুন" },
         "body": { "ko": "출력된 증명서를 수령하세요. 발급된 증명서의 내용과 직인을 반드시 확인하세요.", "en": "Collect the printed certificate. Make sure to check the content and official seal on the certificate.", "zh": "领取打印出的证书。请务必检查证书内容和官方印章。", "bn": "মুদ্রিত সার্টিফিকেট সংগ্রহ করুন। সার্টিফিকেটের বিষয়বস্তু এবং অফিসিয়াল সীল অবশ্যই পরীক্ষা করুন।" },
-        "caution": null
+        "caution": null,
+        "imagePath": "assets/images/kiosk_receive_certificate.png"
       }
     ]
   },
