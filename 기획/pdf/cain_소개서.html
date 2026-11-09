@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Cain 소개서</title>
+<style>
+  @page { size: 297mm 210mm; margin: 0; }
+  :root {
+    --primary: #1565C0;
+    --primary-soft: #E3EDF9;
+    --accent: #FF8F00;
+    --accent-soft: #FFF3E0;
+    --ink: #111827;
+    --sub: #4B5563;
+    --muted: #9CA3AF;
+    --line: #E5E7EB;
+    --bg: #F5F7FB;
+    --ok: #16A34A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; }
+  body {
+    font-family: 'Noto Sans KR', 'Malgun Gothic', 'Nirmala UI', sans-serif;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    word-break: keep-all;
+  }
+  .page {
+    width: 297mm; height: 210mm; position: relative; overflow: hidden;
+    padding: 16mm 18mm 14mm; page-break-after: always; break-after: page;
+    background: #fff;
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  .eyebrow { font-size: 10pt; font-weight: 700; color: var(--primary); letter-spacing: .02em; }
+  h1.title { font-size: 22pt; font-weight: 800; line-height: 1.3; margin-top: 2mm; letter-spacing: -0.02em; }
+  .lead { font-size: 11pt; color: var(--sub); margin-top: 2.5mm; line-height: 1.6; }
+  .footer {
+    position: absolute; left: 18mm; right: 18mm; bottom: 7mm;
+    display: flex; justify-content: space-between; font-size: 8pt; color: var(--muted);
+  }
+  .footer b { color: var(--primary); }
+
+  /* 폰 프레임 */
+  .phone {
+    border: 1.4mm solid #1F2430; border-radius: 5mm; overflow: hidden; background: #fff;
+    box-shadow: 0 2mm 6mm rgba(17,24,39,.14);
+  }
+  .phone img { display: block; width: 100%; }
+
+  /* 표지 */
+  .cover { background: linear-gradient(135deg, #0D47A1 0%, #1565C0 55%, #1E88E5 100%); color: #fff; padding: 0; }
+  .cover-inner { display: flex; height: 100%; }
+  .cover-left { flex: 1.1; padding: 22mm 10mm 18mm 22mm; display: flex; flex-direction: column; }
+  .cover-tag { display: inline-block; align-self: flex-start; font-size: 10pt; font-weight: 700; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.35); padding: 1.6mm 4mm; border-radius: 20mm; }
+  .cover-logo { font-size: 64pt; font-weight: 900; letter-spacing: -0.03em; margin-top: 8mm; line-height: 1; }
+  .cover-slogan { font-size: 21pt; font-weight: 700; margin-top: 7mm; line-height: 1.4; }
+  .cover-desc { font-size: 11pt; margin-top: 5mm; line-height: 1.7; color: rgba(255,255,255,.88); }
+  .cover-bottom { margin-top: auto; display: flex; gap: 6mm; align-items: flex-end; }
+  .cover-team { font-size: 9.5pt; line-height: 1.8; color: rgba(255,255,255,.9); }
+  .cover-team b { color: #fff; font-size: 11pt; }
+  .qr-slot { width: 26mm; height: 26mm; border: 1.2px dashed rgba(255,255,255,.7); border-radius: 3mm; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 7.5pt; line-height: 1.4; color: rgba(255,255,255,.85); flex-shrink: 0; }
+  .cover-right { flex: 1; position: relative; }
+  .cover-right .phone { position: absolute; width: 66mm; border-color: #0B1220; box-shadow: 0 4mm 12mm rgba(0,0,0,.35); }
+  .cover-right .p1 { left: 6mm; top: 30mm; transform: rotate(-4deg); }
+  .cover-right .p2 { left: 54mm; top: 46mm; transform: rotate(3deg); }
+
+  /* 여정 */
+  .journey { margin-top: 9mm; }
+  .journey .jt { font-size: 10pt; font-weight: 800; color: var(--sub); }
+  .journey .row { display: flex; align-items: stretch; margin-top: 3mm; }
+  .journey .st { flex: 1; text-align: center; padding: 3.5mm 2mm; border-radius: 3mm; font-size: 9.5pt; font-weight: 700; background: var(--bg); color: var(--sub); line-height: 1.45; }
+  .journey .st small { display: block; font-weight: 400; font-size: 8pt; color: var(--muted); margin-top: .6mm; }
+  .journey .st.bad { background: #FDECEC; color: #C62828; }
+  .journey .st.bad small { color: #E57373; }
+  .journey .ar { width: 7mm; display: flex; align-items: center; justify-content: center; color: var(--muted); }
+  .journey .st.good { background: var(--primary-soft); color: var(--primary); }
+  .journey .st.good small { color: var(--primary); opacity: .75; }
+
+  /* 문제 */
+  .persona { margin-top: 7mm; background: var(--bg); border-radius: 4mm; padding: 5mm 7mm; font-size: 10.5pt; line-height: 1.75; color: var(--sub); border-left: 1.2mm solid var(--accent); }
+  .persona b { color: var(--ink); }
+  .cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; margin-top: 7mm; }
+  .card { border: 1px solid var(--line); border-radius: 4mm; padding: 6mm; background: #fff; }
+  .card .num { font-size: 9pt; font-weight: 800; color: var(--accent); }
+  .card h3 { font-size: 14pt; font-weight: 800; margin-top: 2mm; }
+  .card p { font-size: 10pt; color: var(--sub); line-height: 1.7; margin-top: 2.5mm; }
+  .target { margin-top: 6mm; font-size: 10pt; color: var(--sub); }
+  .target b { color: var(--primary); }
+
+  /* 솔루션 */
+  .flow { display: flex; align-items: center; gap: 2mm; margin-top: 5mm; }
+  .flow span { font-size: 9pt; font-weight: 700; background: var(--primary-soft); color: var(--primary); padding: 1.6mm 3.6mm; border-radius: 20mm; }
+  .flow i { font-style: normal; color: var(--muted); font-size: 10pt; }
+  .values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7mm; margin-top: 9mm; }
+  .value { display: flex; gap: 4.5mm; align-items: center; }
+  .value .phone { width: 47mm; flex-shrink: 0; }
+  .value .num { width: 8mm; height: 8mm; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 800; font-size: 10pt; display: flex; align-items: center; justify-content: center; }
+  .value h3 { font-size: 13pt; font-weight: 800; margin-top: 3mm; line-height: 1.35; }
+  .value p { font-size: 9.5pt; color: var(--sub); line-height: 1.7; margin-top: 2.5mm; }
+
+  /* 시나리오 */
+  .scenario-head { display: flex; justify-content: space-between; align-items: flex-end; }
+  .video-badge { font-size: 9pt; font-weight: 700; color: #fff; background: var(--accent); padding: 1.6mm 4mm; border-radius: 20mm; white-space: nowrap; }
+  .shots { display: flex; gap: 6mm; margin-top: 6mm; justify-content: center; }
+  .shot { display: flex; flex-direction: column; align-items: center; }
+  .shot .phone { width: 100%; }
+  .shot .cap { margin-top: 3.5mm; text-align: left; width: 100%; }
+  .shot .cap .step { font-size: 8.5pt; font-weight: 800; color: var(--primary); }
+  .shot .cap h4 { font-size: 10.5pt; font-weight: 800; margin-top: .8mm; line-height: 1.35; }
+  .shot .cap p { font-size: 8.5pt; color: var(--sub); line-height: 1.6; margin-top: 1mm; }
+  .shots.three { gap: 14mm; }
+  .shots.three .shot { width: 60mm; }
+  .shots.five { gap: 5mm; }
+  .shots.five .shot { width: 48mm; }
+  .side-note { position: absolute; right: 18mm; top: 52mm; width: 60mm; }
+
+  /* 챗봇 */
+  .chat-wrap { display: flex; gap: 7mm; margin-top: 6mm; }
+  .chat-phone { width: 76mm; height: 147mm; border: 1.4mm solid #1F2430; border-radius: 5mm; background: var(--bg); overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2mm 6mm rgba(17,24,39,.14); }
+  .chat-top { background: #fff; padding: 3mm 4mm; font-size: 10pt; font-weight: 800; border-bottom: 1px solid var(--line); }
+  .chat-body { padding: 3.5mm; display: flex; flex-direction: column; gap: 2.6mm; flex: 1; }
+  .bubble { font-size: 7.3pt; line-height: 1.55; padding: 2.4mm 3mm; border-radius: 3mm; max-width: 88%; white-space: pre-line; }
+  .bubble.user { align-self: flex-end; background: var(--primary); color: #fff; border-top-right-radius: .8mm; }
+  .bubble.bot { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-top-left-radius: .8mm; }
+  .bubble.bot .ai { display: block; font-size: 6.5pt; font-weight: 800; color: var(--accent); margin-bottom: .8mm; }
+  .bubble.bot .ref { display: inline-block; margin-top: 1.4mm; font-size: 6.3pt; color: var(--primary); background: var(--primary-soft); padding: .4mm 1.6mm; border-radius: .8mm; }
+  .chat-input { background: #fff; border-top: 1px solid var(--line); padding: 2.5mm 4mm; font-size: 7.5pt; color: var(--muted); }
+  .points { flex: 1; display: flex; flex-direction: column; gap: 5mm; padding-top: 2mm; }
+  .point { display: flex; gap: 4mm; }
+  .point .num { width: 8mm; height: 8mm; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 800; font-size: 10pt; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .point h4 { font-size: 12pt; font-weight: 800; }
+  .point p { font-size: 9.5pt; color: var(--sub); line-height: 1.65; margin-top: 1.2mm; }
+  .notice { font-size: 8.5pt; color: var(--sub); background: var(--bg); border-radius: 3mm; padding: 3mm 4mm; line-height: 1.6; margin-top: auto; }
+
+  /* 차별성 */
+  table.cmp { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 7mm; font-size: 11pt; }
+  table.cmp th, table.cmp td { padding: 4mm 3mm; text-align: center; border-bottom: 1px solid var(--line); }
+  table.cmp td { font-size: 15pt; }
+  table.cmp td:first-child { font-size: 11pt; }
+  table.cmp th { font-size: 9.5pt; color: var(--sub); font-weight: 700; background: var(--bg); }
+  table.cmp td:first-child, table.cmp th:first-child { text-align: left; font-weight: 700; }
+  table.cmp tr.cain td { background: var(--primary-soft); color: var(--primary); font-weight: 800; }
+  table.cmp tr.cain td:first-child { border-radius: 2mm 0 0 2mm; }
+  table.cmp tr.cain td:last-child { border-radius: 0 2mm 2mm 0; }
+  .o { color: var(--primary); font-weight: 800; }
+  .t { color: var(--accent); font-weight: 800; }
+  .x { color: var(--muted); }
+  .legend { font-size: 8pt; color: var(--muted); margin-top: 2mm; text-align: right; }
+  .langs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5mm; margin-top: 5mm; }
+  .lang { border: 1px solid var(--line); border-radius: 3mm; padding: 6mm 5mm; }
+  .lang .code { font-size: 9pt; font-weight: 800; color: var(--accent); }
+  .lang .t1 { font-size: 14pt; font-weight: 800; margin-top: 2mm; }
+  .lang .t2 { font-size: 10pt; color: var(--sub); margin-top: 1.5mm; }
+  .sub-h { font-size: 13pt; font-weight: 800; margin-top: 10mm; }
+  .sub-h small { font-size: 9pt; color: var(--sub); font-weight: 400; margin-left: 2mm; }
+
+  /* 기술 */
+  .arch { display: grid; grid-template-columns: 1fr 1.25fr; gap: 10mm; margin-top: 8mm; }
+  .diagram { border: 1px solid var(--line); border-radius: 4mm; padding: 6mm; background: var(--bg); display: flex; flex-direction: column; gap: 3mm; }
+  .layer { background: #fff; border: 1px solid var(--line); border-radius: 2.5mm; padding: 3.6mm 4mm; font-size: 10pt; font-weight: 700; display: flex; justify-content: space-between; }
+  .layer small { font-weight: 400; color: var(--sub); font-size: 8.5pt; }
+  .layer.app { background: var(--primary); color: #fff; border: none; }
+  .layer.app small { color: rgba(255,255,255,.85); }
+  .arrow { text-align: center; color: var(--muted); font-size: 9pt; line-height: 1; }
+  .ext { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4mm; }
+  .ext .layer { flex-direction: column; gap: .6mm; font-size: 9pt; }
+  .ext .layer.plan { border-style: dashed; }
+  .feat { display: flex; flex-direction: column; gap: 6.5mm; }
+  .feat .item h4 { font-size: 12.5pt; font-weight: 800; }
+  .feat .item h4 span { color: var(--primary); margin-right: 1.5mm; }
+  .feat .item p { font-size: 10pt; color: var(--sub); line-height: 1.7; margin-top: 1.5mm; }
+  .chips { display: flex; flex-wrap: wrap; gap: 2mm; margin-top: 2mm; }
+  .chips span { font-size: 8.5pt; border: 1px solid var(--line); border-radius: 20mm; padding: 1mm 3mm; color: var(--sub); }
+
+  /* 로드맵 */
+  .impact { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; margin-top: 7mm; }
+  .impact .card { padding: 6mm; }
+  .impact .card h3 { font-size: 13pt; }
+  .impact .who { font-size: 9pt; font-weight: 800; color: var(--primary); }
+  .road { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 8mm; }
+  .road .stage { padding: 5mm 5mm; border-top: 1.2mm solid var(--line); }
+  .road .stage.now { border-top-color: var(--primary); }
+  .road .stage .lbl { font-size: 8.5pt; font-weight: 800; color: var(--muted); }
+  .road .stage.now .lbl { color: var(--primary); }
+  .road .stage h4 { font-size: 12pt; font-weight: 800; margin-top: 1.2mm; }
+  .road .stage ul { margin-top: 2mm; padding-left: 4mm; font-size: 10pt; color: var(--sub); line-height: 1.75; }
+  .team { display: flex; gap: 5mm; margin-top: 8mm; }
+  .member { flex: 1; background: var(--bg); border-radius: 3mm; padding: 4mm 5mm; font-size: 9.5pt; color: var(--sub); line-height: 1.6; }
+  .member b { font-size: 10.5pt; color: var(--ink); margin-right: 1.5mm; }
+</style>
+</head>
+<body>
+
+<!-- 1. 표지 -->
+<section class="page cover">
+  <div class="cover-inner">
+    <div class="cover-left">
+      <span class="cover-tag">AI 다국어 캠퍼스 생활 안내 앱</span>
+      <div class="cover-logo">Cain</div>
+      <div class="cover-slogan">처음 온 캠퍼스,<br>길을 묻지 않아도 되도록</div>
+      <p class="cover-desc">어디로 가야 하는지부터 무엇을 눌러야 하는지까지.<br>건물 밖 도보 경로에서 무인발급기 앞까지 이어지는 안내로<br>외국인 유학생과 신입생이 혼자서도 학교 일을 끝낼 수 있게 돕습니다.</p>
+      <div class="cover-bottom">
+        <div class="qr-slot" style="width:auto;height:auto;padding:3mm 4mm;border-style:solid;text-align:left;font-size:8pt;line-height:1.6">▶ 시연 영상 2편 동봉<br>Cain_Demo1_Certificate.mp4<br>Cain_Demo2_AIChat.mp4</div>
+        <div class="cover-team">
+          <b>한국기술교육대학교 · 팀 Cain</b><br>
+          <span style="white-space:nowrap">윤우성 (팀장·백엔드) · 강준형 (프론트엔드) · 정대윤 (PM·기획)</span>
+        </div>
+      </div>
+    </div>
+    <div class="cover-right">
+      <div class="phone p1"><img src="img/01_home.jpg" alt=""></div>
+      <div class="phone p2"><img src="img/07_step2_floorplan.jpg" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. 문제 -->
+<section class="page">
+  <div class="eyebrow">PROBLEM</div>
+  <h1 class="title">학교 안의 일은, 학교에 익숙한 사람에게만 쉽습니다</h1>
+  <div class="persona">
+    <b>예시 상황 —</b> 갓 입학한 유학생 A는 비자 서류에 낼 <b>재학증명서</b>가 필요합니다. 학교 홈페이지에서 '학생회관 무인발급기'라는 안내를 겨우 찾았지만,
+    학생회관이 어디인지, 건물 안 어디에 발급기가 있는지, 무엇을 챙겨 가고 화면에서 무엇을 눌러야 하는지는 알 수 없습니다. 결국 A는 지나가는 학생에게 길을 묻습니다.
+  </div>
+  <div class="cards3">
+    <div class="card">
+      <div class="num">01</div>
+      <h3>정보가 흩어져 있다</h3>
+      <p>장소, 운영시간, 준비물, 이용 방법이 홈페이지·공지·게시판에 나뉘어 있어, 서류 한 장을 떼려 해도 여러 곳을 찾아다녀야 합니다.</p>
+    </div>
+    <div class="card">
+      <div class="num">02</div>
+      <h3>지도는 건물 앞까지만</h3>
+      <p>지도 앱은 건물 입구까지만 안내합니다. '학생회관 2층 무인발급기'처럼 건물 안의 위치는 처음 온 사람이 직접 헤매며 찾아야 합니다.</p>
+    </div>
+    <div class="card">
+      <div class="num">03</div>
+      <h3>절차를 몰라 멈춘다</h3>
+      <p>발급기 앞에서 어떤 메뉴를 고를지, 무엇이 필요한지 몰라 멈춥니다. 한국어가 서툰 유학생에게는 이 모든 단계가 더 높은 벽입니다.</p>
+    </div>
+  </div>
+  <div class="journey">
+    <div class="jt">지금의 여정 — 앱이 세 개 필요하고, 그래도 중간에 끊깁니다</div>
+    <div class="row">
+      <div class="st">홈페이지 검색<small>장소·준비물 찾기</small></div><div class="ar">→</div>
+      <div class="st">지도 앱<small>건물 입구까지</small></div><div class="ar">→</div>
+      <div class="st bad">건물 안<small>어느 층, 어느 쪽?</small></div><div class="ar">→</div>
+      <div class="st bad">발급기 앞<small>무엇을 눌러야?</small></div><div class="ar">→</div>
+      <div class="st">결국 사람에게 질문</div>
+    </div>
+    <div class="row">
+      <div class="st good" style="flex:5.4">Cain 하나로 — 준비물 확인 → 도보 경로 → 층별 배치도 길안내 → 발급기 화면 안내 → 완료</div>
+    </div>
+  </div>
+  <p class="target">주요 사용자 &nbsp;<b>외국인 유학생 · 교환학생 · 신입생</b> &nbsp;— 그리고 교내 시설을 처음 이용하는 모든 사람</p>
+  <div class="footer"><span><b>Cain</b> · AI 다국어 캠퍼스 생활 안내 앱</span><span>2</span></div>
+</section>
+
+<!-- 3. 솔루션 -->
+<section class="page">
+  <div class="eyebrow">SOLUTION</div>
+  <h1 class="title">Cain은 '어디로'와 '어떻게'를 한 번에 안내합니다</h1>
+  <div class="flow">
+    <span>언어 선택</span><i>→</i><span>서비스 찾기</span><i>→</i><span>방문 전 준비</span><i>→</i><span>단계별 현장 안내</span><i>→</i><span>완료</span>
+    <i>&nbsp;·&nbsp;</i><span style="background:var(--accent-soft);color:var(--accent)">언제든 AI 상담</span>
+  </div>
+  <div class="values">
+    <div class="value">
+      <div class="phone"><img src="img/05_pre_visit.jpg" alt=""></div>
+      <div>
+        <div class="num">1</div>
+        <h3>위치부터 절차까지<br>한 화면에</h3>
+        <p>장소·운영시간·준비물과 전체 절차를 출발 전에 미리 확인합니다. 준비물은 체크리스트로 챙깁니다.</p>
+      </div>
+    </div>
+    <div class="value">
+      <div class="phone"><img src="img/07_step2_floorplan.jpg" alt=""></div>
+      <div>
+        <div class="num">2</div>
+        <h3>건물 밖에서 안까지<br>이어지는 길안내</h3>
+        <p>현재 위치에서 건물까지는 지도 위 도보 경로로, 건물 안에서는 층별 배치도 위 경로로 목적지까지 안내합니다.</p>
+      </div>
+    </div>
+    <div class="value">
+      <div class="phone"><img src="img/08_step3_kiosk.jpg" alt=""></div>
+      <div>
+        <div class="num">3</div>
+        <h3>현장 화면 그대로<br>따라 하는 단계 안내</h3>
+        <p>무인발급기 화면과 같은 이미지로 무엇을 눌러야 하는지 보여줍니다. 막히면 AI에게 바로 물어볼 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span><b>Cain</b> · AI 다국어 캠퍼스 생활 안내 앱</span><span>3</span></div>
+</section>
+
+<!-- 4. 시나리오 1 - 출발 전 -->
+<section class="page">
+  <div class="scenario-head">
+    <div>
+      <div class="eyebrow">SCENARIO 1 · 재학증명서 발급</div>
+      <h1 class="title">출발 전 — 어디로, 무엇을 챙겨서</h1>
+    </div>
+    <span class="video-badge">▶ 시연 영상 1</span>
+  </div>
+  <div class="shots three">
+    <div class="shot">
+      <div class="phone"><img src="img/02_service_detail.jpg" alt=""></div>
+      <div class="cap"><div class="step">STEP A</div><h4>서비스 상세</h4><p>이용 장소, 운영시간, 준비물, 이용 대상을 한 화면에 모았습니다.</p></div>
+    </div>
+    <div class="shot">
+      <div class="phone"><img src="img/04_walking_route.jpg" alt=""></div>
+      <div class="cap"><div class="step">STEP B</div><h4>위치 확인 · 도보 경로</h4><p>버튼 하나로 현재 위치에서 학생회관까지 도보 경로와 소요 시간을 보여줍니다.</p></div>
+    </div>
+    <div class="shot">
+      <div class="phone"><img src="img/05_pre_visit.jpg" alt=""></div>
+      <div class="cap"><div class="step">STEP C</div><h4>방문 전 준비</h4><p>준비물 체크리스트와 전체 4단계 절차를 미리 훑어보고 출발합니다.</p></div>
+    </div>
+  </div>
+  <div class="footer"><span><b>Cain</b> · AI 다국어 캠퍼스 생활 안내 앱</span><span>4</span></div>
+</section>
+
+<!-- 5. 시나리오 1 - 현장 -->
+<section class="page">
+  <div class="scenario-head">
+    <div>
+      <div class="eyebrow">SCENARIO 1 · 재학증명서 발급</div>
+      <h1 class="title">현장에서 — 한 단계씩 따라가면 끝</h1>
+    </div>
+    <span class="video-badge">▶ 시연 영상 1</span>
+  </div>
+  <div class="shots five">
+    <div class="shot">
+      <div class="phone"><img src="img/06_step1_map.jpg" alt=""></div>
+      <div class="cap"><div class="step">1단계</div><h4>학생회관으로 이동</h4><p>지도 위 도보 경로를 따라 건물까지</p></div>
+    </div>
+    <div class="shot">
+      <div class="phone"><img src="img/07_step2_floorplan.jpg" alt=""></div>
+      <div class="cap"><div class="step">2단계</div><h4>2층 발급기 찾기</h4><p>층별 배치도 위에 현위치 → 발급기 경로</p></div>
+    </div>
+    <div class="shot">
+      <div class="phone"><img src="img/08_step3_kiosk.jpg" alt=""></div>
+      <div class="cap"><div class="step">3단계</div><h4>증명서 선택</h4><p>발급기 화면 그대로 보며 메뉴 선택</p></div>
+    </div>
+    <div class="shot">
+      <div class="phone"><img src="img/09_step4_receive.jpg" alt=""></div>
+      <div class="cap"><div class="step">4단계</div><h4>증명서 수령</h4><p>출력구 위치와 직인 확인까지 안내</p></div>
+    </div>
+    <div class="shot">
+      <div class="phone"><img src="img/10_completion.jpg" alt=""></div>
+      <div class="cap"><div class="step">완료</div><h4>후속 확인사항</h4><p>마지막으로 챙길 내용을 정리</p></div>
+    </div>
+  </div>
+  <div class="footer"><span><b>Cain</b> · AI 다국어 캠퍼스 생활 안내 앱</span><span>5</span></div>
+</section>
+
+<!-- 6. 시나리오 2 - AI 상담 -->
+<section class="page">
+  <div class="scenario-head">
+    <div>
+      <div class="eyebrow">SCENARIO 2 · AI 상담</div>
+      <h1 class="title">학생증을 잃어버렸을 때 — 묻고, 확인하고, 이어서 답합니다</h1>
+    </div>
+    <span class="video-badge">▶ 시연 영상 2</span>
+  </div>
+  <div class="chat-wrap">
+    <div class="chat-phone">
+      <div class="chat-top">AI 도우미</div>
+      <div class="chat-body">
+        <div class="bubble user">학생증을 잃어버렸는데 어떻게 해야 해?</div>
+        <div class="bubble bot"><span class="ai">AI</span>학생증을 분실하셨군요. 분실 신고와 재발급 절차를 안내해 드릴게요.
+
+먼저, 잃어버린 학생증에 체크카드 같은 결제 기능도 있나요?</div>
+        <div class="bubble user">아니, 결제 기능은 없고 학교에서 쓰는 학생증이야. 어디서 재발급받고 뭘 챙겨가야 해?</div>
+        <div class="bubble bot"><span class="ai">AI</span>결제 기능이 없다면 학생지원팀에서 재발급받으면 돼요.
+
+• 위치: 학생회관 1층 학생지원팀 (평일 09:00~18:00)
+• 준비물: 신분증, 증명사진 1매
+• 비용: 5,000원 · 발급까지 약 3~5일
+
+방문 전에 학생 포털에서 분실 신고를 먼저 해 주세요.<br><span class="ref">공식: 학생증 재발급 안내</span></div>
+      </div>
+      <div class="chat-input">질문을 입력하세요</div>
+    </div>
+    <div class="chat-phone">
+      <div class="chat-top">AI 도우미</div>
+      <div class="chat-body">
+        <div class="bubble user">새 학생증이 나올 때까지 도서관은 어떻게 이용해?</div>
+        <div class="bubble bot"><span class="ai">AI</span>새 학생증이 나올 때까지는 모바일 학생증으로 도서관을 이용할 수 있어요.
+
+학교 앱 &gt; 모바일 학생증에서 QR 코드를 띄운 뒤 출입 게이트에 찍으면 돼요.
+
+도서 대출은 확인 절차가 다를 수 있으니, 어려우면 도서관 대출실에 문의해 주세요.<br><span class="ref">공식: 도서관 이용 안내</span></div>
+      </div>
+      <div class="chat-input">질문을 입력하세요</div>
+    </div>
+    <div class="points">
+      <div class="point"><div class="num">1</div><div><h4>상황부터 확인합니다</h4><p>결제 기능이 있는 학생증은 은행 분실 신고가 먼저입니다. 답이 달라지는 지점에서는 바로 답하지 않고 먼저 되묻습니다.</p></div></div>
+      <div class="point"><div class="num">2</div><div><h4>필요한 것만 정리합니다</h4><p>담당 부서, 위치, 운영시간, 준비물, 비용, 기간을 한눈에 보이게 정리하고 공식 안내 출처를 함께 표시합니다.</p></div></div>
+      <div class="point"><div class="num">3</div><div><h4>대화를 이어서 답합니다</h4><p>"새 학생증이 나올 때까지"라는 후속 질문에도 앞의 대화를 이어받아, 그 사이에 필요한 대체 방법을 안내합니다.</p></div></div>
+      <div class="notice">※ 현재 프로토타입의 AI 상담은 시연용 대화 시나리오로 동작하며, 화면 속 부서·연락처·비용은 예시 정보입니다. 교내 공식 자료와 재학생 경험을 기반으로 답하는 AI 서버를 연동하고 있습니다.</div>
+    </div>
+  </div>
+  <div class="footer"><span><b>Cain</b> · AI 다국어 캠퍼스 생활 안내 앱</span><span>6</span></div>
+</section>
+
+<!-- 7. 차별성 -->
+<section class="page">
+  <div class="eyebrow">WHY CAIN</div>
+  <h1 class="title">흩어진 정보와 끊긴 길안내를 하나로 잇습니다</h1>
+  <table class="cmp">
+    <thead>
+      <tr><th></th><th>교내 정보 한곳에</th><th>건물 밖 도보 경로</th><th>건물 안 길안내</th><th>단계별 이용 절차</th><th>다국어 안내</th><th>학교 맞춤 상담</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>학교 홈페이지</td><td class="t">△</td><td class="x">✕</td><td class="x">✕</td><td class="t">△</td><td class="t">△</td><td class="x">✕</td></tr>
+      <tr><td>지도 앱</td><td class="x">✕</td><td class="o">○</td><td class="x">✕</td><td class="x">✕</td><td class="o">○</td><td class="x">✕</td></tr>
+      <tr><td>범용 AI 챗봇</td><td class="t">△</td><td class="x">✕</td><td class="x">✕</td><td class="t">△</td><td class="o">○</td><td class="t">△</td></tr>
+      <tr class="cain"><td>Cain</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td></tr>
+    </tbody>
+  </table>
+  <div class="legend">○ 제공 &nbsp; △ 일부·제한적 &nbsp; ✕ 미제공</div>
+
+  <div class="sub-h">4개 언어 지원 <small>첫 실행 때 고른 언어로 메뉴와 이용 안내 전체를 보여줍니다</small></div>
+  <div class="langs">
+    <div class="lang"><div class="code">한국어</div><div class="t1">재학 증명서</div><div class="t2">2층 무인발급기 찾아가기</div></div>
+    <div class="lang"><div class="code">English</div><div class="t1">Enrollment Certificate</div><div class="t2">Find the kiosk on 2F</div></div>
+    <div class="lang"><div class="code">中文</div><div class="t1">在学证明书</div><div class="t2">前往2楼自助发证机</div></div>
+    <div class="lang"><div class="code">বাংলা</div><div class="t1">ভর্তি সার্টিফিকেট</div><div class="t2">২য় তলার কিওস্ক খুঁজে নিন</div></div>
+  </div>
+  <div class="footer"><span><b>Cain</b> · AI 다국어 캠퍼스 생활 안내 앱</span><span>7</span></div>
+</section>
+
+<!-- 8. 기술·확장성 -->
+<section class="page">
+  <div class="eyebrow">TECHNOLOGY</div>
+  <h1 class="title">학교 데이터만 바꾸면 어디에나 적용되는 구조</h1>
+  <div class="arch">
+    <div class="diagram">
+      <div class="layer app">Cain 앱 (Flutter) <small>Android</small></div>
+      <div class="layer">화면 <small>안내 · 지도 · 배치도 · AI 상담</small></div>
+      <div class="arrow">▼</div>
+      <div class="layer">ViewModel <small>진행 단계 · 상태 관리</small></div>
+      <div class="arrow">▼</div>
+      <div class="layer">Repository <small>데이터 출처 교체 지점</small></div>
+      <div class="arrow">▼</div>
+      <div class="ext">
+        <div class="layer">교내 안내 데이터<small>서비스·단계·건물·연락처 (4개 언어)</small></div>
+        <div class="layer">Google Maps SDK<small>캠퍼스 지도 · 건물 마커</small></div>
+        <div class="layer">TMAP 보행자 경로 API<small>도보 경로 · 소요 시간</small></div>
+        <div class="layer plan">AI 상담 서버<small>질문 + 언어 + 현재 단계 → 답변 + 출처</small></div>
+      </div>
+    </div>
+    <div class="feat">
+      <div class="item"><h4><span>01</span>콘텐츠와 코드의 분리</h4><p>서비스, 단계, 건물 정보를 데이터 파일로 관리합니다. 새 안내를 추가하거나 다른 학교에 적용할 때 앱 코드를 고치지 않고 데이터만 바꾸면 됩니다.</p></div>
+      <div class="item"><h4><span>02</span>배치도 사진 한 장으로 실내 길안내</h4><p>실내 경로를 배치도 이미지 위의 비율 좌표로 표현합니다. 별도 실내 측위 장비 없이 배치도 사진과 좌표 몇 개만으로 새 건물을 추가할 수 있습니다.</p></div>
+      <div class="item"><h4><span>03</span>지금 보고 있는 단계를 아는 AI</h4><p>AI 상담에 질문과 함께 선택 언어, 현재 보고 있는 서비스·단계 정보를 보내도록 설계해, 같은 질문이라도 상황에 맞는 답을 줄 수 있습니다.</p></div>
+      <div class="item"><h4><span>04</span>교체 가능한 외부 서비스</h4><p>도보 경로, AI 응답 등 외부 의존 기능을 인터페이스로 분리해 제공자를 바꿔도 화면은 그대로 동작합니다.</p></div>
+      <div class="chips"><span>Flutter</span><span>Provider (MVVM)</span><span>Google Maps</span><span>TMAP API</span><span>Geolocator</span><span>REST API</span></div>
+    </div>
+  </div>
+  <div class="footer"><span><b>Cain</b> · AI 다국어 캠퍼스 생활 안내 앱</span><span>8</span></div>
+</section>
+
+<!-- 9. 기대효과·로드맵·팀 -->
+<section class="page">
+  <div class="eyebrow">IMPACT &amp; ROADMAP</div>
+  <h1 class="title">혼자서도 해낼 수 있는 캠퍼스, 우리 학교에서 시작합니다</h1>
+  <div class="impact">
+    <div class="card"><div class="who">학생</div><h3>도움 없이 스스로</h3><p>길을 묻고 다니지 않아도 행정 업무를 끝낼 수 있어, 낯선 환경에 적응하는 부담이 줄어듭니다.</p></div>
+    <div class="card"><div class="who">학교 행정 부서</div><h3>반복 문의 감소</h3><p>"어디서 떼요?", "뭘 가져가요?" 같은 위치·절차 문의가 앱으로 해결됩니다.</p></div>
+    <div class="card"><div class="who">학교</div><h3>유학생 친화 캠퍼스</h3><p>언어 장벽을 낮춘 안내로 유학생이 머물고 싶은 학교 환경을 만듭니다.</p></div>
+  </div>
+  <div class="road">
+    <div class="stage now">
+      <div class="lbl">1단계 · 현재 프로토타입</div>
+      <h4>핵심 흐름 검증</h4>
+      <ul><li>증명서 발급 단계별 안내</li><li>지도 도보 경로 · 층별 배치도 길찾기</li><li>4개 언어 · 시연용 AI 상담</li></ul>
+    </div>
+    <div class="stage">
+      <div class="lbl">2단계</div>
+      <h4>교내 서비스 확대</h4>
+      <ul><li>교내 자료 기반 AI 상담 서버 연동</li><li>학생식당 · 전화번호부 · 온라인 서비스 안내</li><li>주요 건물 배치도 추가</li></ul>
+    </div>
+    <div class="stage">
+      <div class="lbl">3단계</div>
+      <h4>함께 만드는 안내</h4>
+      <ul><li>재학생이 정보와 팁을 제보하는 업데이트 구조</li><li>다른 대학으로 확장</li></ul>
+    </div>
+  </div>
+  <div class="team">
+    <div class="member"><b>윤우성</b>팀장 · 백엔드<br>교내 정보 데이터 관리, API 개발, AI 다국어 질의응답 연동</div>
+    <div class="member"><b>강준형</b>프론트엔드<br>언어 선택·홈·지도 화면 구현, 화면 이동 및 서버 연동</div>
+    <div class="member"><b>정대윤</b>PM · 기획 · 프론트엔드<br>일정 관리, 안내 자료 수집·정리, 이용 절차 안내 화면 구현</div>
+  </div>
+  <div class="footer"><span><b>Cain</b> · AI 다국어 캠퍼스 생활 안내 앱</span><span>9</span></div>
+</section>
+
+</body>
+</html>

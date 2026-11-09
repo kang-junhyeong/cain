@@ -32,3 +32,7 @@ Thumbs.db
 
 # API 키 (env.example.json을 복사해서 env.json 생성)
 cain/env.json
+
+# 제출 자료 생성물 (video_work/gen_frames.js, build_videos.sh로 다시 만들 수 있음)
+기획/video_work/frames/
+기획/submission/*.zip
