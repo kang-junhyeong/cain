@@ -5,6 +5,7 @@ import '../app_strings.dart';
 import '../viewmodels/locale_provider.dart';
 import '../models/service.dart';
 import '../repositories/service_repository.dart';
+import 'building_location_screen.dart';
 import 'pre_visit_screen.dart';
 
 class ServiceDetailScreen extends StatefulWidget {
@@ -151,12 +152,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
               children: [
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed: () {
-                      // TODO(지도 보류): 지도 화면 연결
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(strings.mapComingSoon)),
-                      );
-                    },
+                    onPressed: () => openServiceLocation(context, s),
                     icon: const Icon(Icons.location_on, size: 18),
                     label: Text(strings.checkLocation),
                     style: OutlinedButton.styleFrom(minimumSize: const Size(0, 52)),

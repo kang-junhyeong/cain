@@ -15,6 +15,9 @@ class ServiceModel {
   final String verificationStatus;
   final List<GuideStep> steps;
 
+  /// 방문 전 준비물 체크리스트. 비어 있으면 화면에서 [requirements]를 한 항목으로 쓴다.
+  final List<LocalizedText> checklist;
+
   const ServiceModel({
     required this.id,
     required this.categoryId,
@@ -29,6 +32,7 @@ class ServiceModel {
     required this.iconName,
     required this.verificationStatus,
     required this.steps,
+    this.checklist = const [],
   });
 
   factory ServiceModel.fromJson(Map<String, dynamic> json) {
@@ -51,6 +55,9 @@ class ServiceModel {
       iconName: json['iconName'] as String? ?? 'info',
       verificationStatus: json['verificationStatus'] as String? ?? 'pending',
       steps: stepList,
+      checklist: (json['checklist'] as List<dynamic>? ?? [])
+          .map((e) => LocalizedText.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 

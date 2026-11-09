@@ -21,15 +21,15 @@ const Set<String> _mapStepIds = {'step_enroll_01'};
 /// 건물 안 배치도 길찾기를 보여줄 단계
 const Map<String, _FloorPlanRoute> _floorPlanSteps = {
   'step_enroll_02': _FloorPlanRoute(
-    imagePath: 'assets/map/student_union_2f.jpg',
-    aspectRatio: 900 / 1000,
+    // assets/map/진짜.png(학생회관 층별 안내)의 2F 부분을 잘라낸 이미지
+    imagePath: 'assets/map/student_union_2f_guide.png',
+    aspectRatio: 1400 / 760,
     floor: 2,
-    // 배치도 이미지 기준 0~1 비율 좌표. 첫 점 = 현위치(2층 계단·엘리베이터), 마지막 점 = 무인발급기
-    // 시연용 임의 위치: 2층 복도 오른쪽 끝 구석. TODO(위치 확인): 실제 위치 확인 후 마지막 점 조정
+    // 배치도 이미지 기준 0~1 비율 좌표. 첫 점 = 현위치(2층 엘리베이터 앞 복도), 마지막 점 = 무인발급기
+    // 시연용 임의 위치: 2층 가로 복도 오른쪽 끝. TODO(위치 확인): 실제 위치 확인 후 마지막 점 조정
     route: [
-      Offset(0.267, 0.185),
-      Offset(0.267, 0.235),
-      Offset(0.785, 0.235),
+      Offset(0.44, 0.415),
+      Offset(0.935, 0.415),
     ],
   ),
 };

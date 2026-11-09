@@ -5,6 +5,7 @@ import '../app_strings.dart';
 import '../viewmodels/locale_provider.dart';
 import '../models/service.dart';
 import '../repositories/service_repository.dart';
+import 'building_location_screen.dart';
 import 'guide_step_screen.dart';
 
 class PreVisitScreen extends StatefulWidget {
@@ -20,7 +21,7 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
   ServiceModel? _service;
   bool _isLoading = true;
   bool _hasError = false;
-  final Map<String, bool> _checks = {};
+  final Map<int, bool> _checks = {};
 
   @override
   void initState() {
@@ -32,14 +33,7 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
     try {
       final service = await context.read<ServiceRepository>().getById(widget.serviceId);
       if (!mounted) return;
-      setState(() {
-        _service = service;
-        if (service != null) {
-          for (final step in service.steps) {
-            _checks[step.id] = false;
-          }
-        }
-      });
+      setState(() => _service = service);
     } catch (_) {
       if (!mounted) return;
       setState(() => _hasError = true);
@@ -64,6 +58,7 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
     }
 
     final s = _service!;
+    final checklistItems = s.checklist.isNotEmpty ? s.checklist : [s.requirements];
 
     return Scaffold(
       appBar: AppBar(title: Text(strings.preVisitTitle)),
@@ -138,7 +133,7 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
                   ),
                   const SizedBox(height: 12),
 
-                  // 준비물 체크리스트 (단계 목록)
+                  // 준비물 체크리스트
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -146,17 +141,17 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
                       border: Border.all(color: AppTheme.divider),
                     ),
                     child: Column(
-                      children: s.steps.asMap().entries.map((entry) {
+                      children: checklistItems.asMap().entries.map((entry) {
                         final i = entry.key;
-                        final step = entry.value;
-                        final checked = _checks[step.id] ?? false;
+                        final item = entry.value;
+                        final checked = _checks[i] ?? false;
                         return Column(
                           children: [
                             CheckboxListTile(
                               value: checked,
-                              onChanged: (v) => setState(() => _checks[step.id] = v ?? false),
+                              onChanged: (v) => setState(() => _checks[i] = v ?? false),
                               title: Text(
-                                step.title.resolve(locale),
+                                item.resolve(locale),
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: checked ? AppTheme.textSecondary : AppTheme.textPrimary,
@@ -167,13 +162,59 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
                               controlAffinity: ListTileControlAffinity.leading,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                             ),
-                            if (i < s.steps.length - 1)
+                            if (i < checklistItems.length - 1)
                               const Divider(height: 1, color: AppTheme.divider, indent: 16, endIndent: 16),
                           ],
                         );
                       }).toList(),
                     ),
                   ),
+
+                  // 절차 (단계 이름 목록)
+                  if (s.steps.isNotEmpty) ...[
+                    const SizedBox(height: 24),
+                    Text(
+                      strings.procedure,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppTheme.textPrimary),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppTheme.divider),
+                      ),
+                      child: Column(
+                        children: s.steps.asMap().entries.map((entry) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 26,
+                                  height: 26,
+                                  alignment: Alignment.center,
+                                  decoration: const BoxDecoration(color: AppTheme.primary, shape: BoxShape.circle),
+                                  child: Text(
+                                    '${entry.key + 1}',
+                                    style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    entry.value.title.resolve(locale),
+                                    style: const TextStyle(fontSize: 14, color: AppTheme.textPrimary),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
 
                   const SizedBox(height: 20),
 
@@ -219,12 +260,7 @@ class _PreVisitScreenState extends State<PreVisitScreen> {
               children: [
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed: () {
-                      // TODO(지도 보류): 지도 화면 연결
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(strings.mapComingSoon)),
-                      );
-                    },
+                    onPressed: () => openServiceLocation(context, s),
                     icon: const Icon(Icons.location_on, size: 18),
                     label: Text(strings.checkLocation),
                     style: OutlinedButton.styleFrom(minimumSize: const Size(0, 52)),

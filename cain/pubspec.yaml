@@ -35,5 +35,6 @@ flutter:
     - assets/data/buildings.json
     # 층별 배치도 (원근 보정본만 등록, 원본 사진은 앱에 포함하지 않음)
     - assets/map/student_union_2f.jpg
+    - assets/map/student_union_2f_guide.png
     # 단계 안내 이미지
     - assets/images/

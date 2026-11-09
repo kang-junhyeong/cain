@@ -26,6 +26,9 @@
     "contactIds": ["contact_student_support"],
     "iconName": "school",
     "verificationStatus": "pending",
+    "checklist": [
+      { "ko": "학생증", "en": "Student ID", "zh": "学生证", "bn": "ছাত্র আইডি" }
+    ],
     "steps": [
       {
         "id": "step_enroll_01",

@@ -68,6 +68,7 @@ class AppStrings {
   // 준비물 화면
   String get preVisitTitle => _t(ko: '방문 전 준비', en: 'Pre-visit checklist', zh: '访问前准备', bn: 'পরিদর্শনের আগে প্রস্তুতি');
   String get checklist => _t(ko: '준비물 체크리스트', en: 'Checklist', zh: '准备清单', bn: 'চেকলিস্ট');
+  String get procedure => _t(ko: '절차', en: 'Procedure', zh: '流程', bn: 'প্রক্রিয়া');
   String get preVisitNotes => _t(ko: '방문 전 안내사항', en: 'Before you go', zh: '访问前注意事项', bn: 'যাওয়ার আগে জানুন');
 
   // 단계 화면
