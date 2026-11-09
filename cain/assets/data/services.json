@@ -4,7 +4,7 @@
     "categoryId": "documents",
     "title": { "ko": "증명서 발급 안내", "en": "Certificate Issuance Guide", "zh": "证书申请指南", "bn": "সার্টিফিকেট ইস্যু গাইড" },
     "summary": { "ko": "재학·성적·졸업 등 각종 증명서 발급 방법과 절차 안내", "en": "Guide to issuing enrollment, transcript, and graduation certificates", "zh": "在学证明、成绩单、毕业证书等各类证书的申请方法和流程", "bn": "ভর্তি, ট্রান্সক্রিপ্ট এবং স্নাতক সার্টিফিকেট ইস্যু করার গাইড" },
-    "location": { "ko": "학생회관 1층 무인발급기", "en": "1F Student Union Kiosk", "zh": "学生会馆1楼自助发证机", "bn": "১ম তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
+    "location": { "ko": "학생회관 2층 무인발급기", "en": "2F Student Union Kiosk", "zh": "学生会馆2楼自助发证机", "bn": "২য় তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
     "hours": { "ko": "09:00 - 18:00 (평일)", "en": "09:00 - 18:00 (Weekdays)", "zh": "09:00 - 18:00（工作日）", "bn": "০৯:০০ - ১৮:০০ (সপ্তাহের দিন)" },
     "requirements": { "ko": "학생증 또는 신분증", "en": "Student ID or national ID", "zh": "学生证或身份证", "bn": "ছাত্র আইডি বা জাতীয় পরিচয়পত্র" },
     "targetUsers": { "ko": "재학생 / 졸업생", "en": "Current students / Alumni", "zh": "在校生 / 毕业生", "bn": "বর্তমান শিক্ষার্থী / প্রাক্তন শিক্ষার্থী" },
@@ -18,7 +18,7 @@
     "categoryId": "documents",
     "title": { "ko": "재학 증명서", "en": "Enrollment Certificate", "zh": "在学证明书", "bn": "ভর্তি সার্টিফিকেট" },
     "summary": { "ko": "현재 재학 중임을 증명하는 공식 증명서", "en": "Official certificate proving current enrollment", "zh": "证明当前在校就读的官方证书", "bn": "বর্তমান ভর্তি প্রমাণের অফিসিয়াল সার্টিফিকেট" },
-    "location": { "ko": "학생회관 1층 무인발급기", "en": "1F Student Union Kiosk", "zh": "学生会馆1楼自助发证机", "bn": "১ম তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
+    "location": { "ko": "학생회관 2층 무인발급기", "en": "2F Student Union Kiosk", "zh": "学生会馆2楼自助发证机", "bn": "২য় তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
     "hours": { "ko": "09:00 - 18:00 (평일)", "en": "09:00 - 18:00 (Weekdays)", "zh": "09:00 - 18:00（工作日）", "bn": "০৯:০০ - ১৮:০০ (সপ্তাহের দিন)" },
     "requirements": { "ko": "학생증 또는 신분증", "en": "Student ID or national ID", "zh": "学生证或身份证", "bn": "ছাত্র আইডি বা জাতীয় পরিচয়পত্র" },
     "targetUsers": { "ko": "재학생", "en": "Current students", "zh": "在校生", "bn": "বর্তমান শিক্ষার্থী" },
@@ -31,25 +31,26 @@
         "id": "step_enroll_01",
         "serviceId": "certificate_enrollment",
         "order": 1,
-        "title": { "ko": "학생회관 1층으로 이동", "en": "Go to 1F of Student Union", "zh": "前往学生会馆1楼", "bn": "স্টুডেন্ট ইউনিয়নের ১ম তলায় যান" },
-        "body": { "ko": "학생회관 건물 1층에 위치한 무인발급기 앞으로 이동하세요. 정문에서 도보 약 5분 거리입니다.", "en": "Go to the self-service kiosk on the 1st floor of the Student Union building, approximately 5 minutes walk from the main gate.", "zh": "前往学生会馆1楼的自助发证机前。距正门步行约5分钟。", "bn": "স্টুডেন্ট ইউনিয়ন বিল্ডিংয়ের ১ম তলায় সেলফ-সার্ভিস কিওস্কে যান। মূল গেট থেকে প্রায় ৫ মিনিটের হাঁটা পথ।" },
+        "title": { "ko": "학생회관으로 이동", "en": "Go to the Student Union", "zh": "前往学生会馆", "bn": "স্টুডেন্ট ইউনিয়নে যান" },
+        "body": { "ko": "지도에서 학생회관 위치를 확인하고 이동하세요. 오른쪽 아래 버튼을 누르면 현재 위치에서 학생회관까지 도보 경로를 볼 수 있습니다.", "en": "Check the Student Union on the map and head there. Tap the button at the bottom right to see the walking route from where you are.", "zh": "在地图上确认学生会馆的位置后前往。点击右下角按钮，可查看从当前位置到学生会馆的步行路线。", "bn": "মানচিত্রে স্টুডেন্ট ইউনিয়নের অবস্থান দেখে সেখানে যান। নিচে ডানদিকের বোতামে চাপলে আপনার অবস্থান থেকে হাঁটার পথ দেখা যাবে।" },
         "caution": null
       },
       {
         "id": "step_enroll_02",
         "serviceId": "certificate_enrollment",
         "order": 2,
-        "title": { "ko": "무인발급기에서 증명서 종류 선택", "en": "Select certificate type at kiosk", "zh": "在自助机上选择证书种类", "bn": "কিওস্কে সার্টিফিকেটের ধরন নির্বাচন করুন" },
-        "body": { "ko": "무인발급기 화면에서 '재학증명서'를 선택하세요. 언어 변경 버튼으로 영어 등 다른 언어로 전환할 수 있습니다.", "en": "Select 'Enrollment Certificate' on the kiosk screen. You can switch to another language using the language button.", "zh": "在自助机屏幕上选择'在学证明书'。可以使用语言切换按钮切换到其他语言。", "bn": "কিওস্ক স্ক্রিনে 'ভর্তি সার্টিফিকেট' নির্বাচন করুন। ভাষা বোতাম ব্যবহার করে অন্য ভাষায় পরিবর্তন করতে পারেন।" },
-        "caution": { "ko": "증명서 종류에 따라 수수료가 발생할 수 있습니다.", "en": "Fees may apply depending on the certificate type.", "zh": "根据证书种类可能会产生费用。", "bn": "সার্টিফিকেটের ধরন অনুযায়ী ফি প্রযোজ্য হতে পারে।" }
+        "title": { "ko": "2층 무인발급기 찾아가기", "en": "Find the kiosk on 2F", "zh": "前往2楼自助发证机", "bn": "২য় তলার কিওস্ক খুঁজে নিন" },
+        "body": { "ko": "학생회관에 들어와 계단이나 엘리베이터로 2층에 올라가세요. 배치도의 파란 점(현위치)에서 빨간 점선을 따라가면 무인발급기(빨간 점)가 있습니다.", "en": "Enter the Student Union and take the stairs or elevator to the 2nd floor. From the blue dot (you are here), follow the red dotted line to the kiosk (red dot).", "zh": "进入学生会馆后，乘楼梯或电梯到2楼。从平面图上的蓝点（当前位置）沿红色虚线前进，即可到达自助发证机（红点）。", "bn": "স্টুডেন্ট ইউনিয়নে ঢুকে সিঁড়ি বা লিফটে ২য় তলায় যান। নীল বিন্দু (আপনি এখানে) থেকে লাল ডটেড লাইন ধরে গেলে কিওস্ক (লাল বিন্দু) পাবেন।" },
+        "caution": null
       },
       {
         "id": "step_enroll_03",
         "serviceId": "certificate_enrollment",
         "order": 3,
-        "title": { "ko": "학생증 또는 신분증 투입", "en": "Insert student ID or national ID", "zh": "插入学生证或身份证", "bn": "ছাত্র আইডি বা জাতীয় পরিচয়পত্র ঢোকান" },
-        "body": { "ko": "화면 안내에 따라 학생증 또는 신분증을 카드 투입구에 넣으세요. 본인 확인 후 자동으로 다음 단계로 이동합니다.", "en": "Insert your student ID or national ID into the card slot as instructed. After identity verification, it will proceed automatically.", "zh": "按照屏幕指示将学生证或身份证插入读卡口。身份验证后自动进入下一步。", "bn": "স্ক্রিনের নির্দেশ অনুযায়ী কার্ড স্লটে আপনার আইডি ঢোকান। পরিচয় যাচাইয়ের পরে স্বয়ংক্রিয়ভাবে পরবর্তী ধাপে যাবে।" },
-        "caution": null
+        "title": { "ko": "무인발급기에서 증명서 종류 선택", "en": "Select certificate type at kiosk", "zh": "在自助机上选择证书种类", "bn": "কিওস্কে সার্টিফিকেটের ধরন নির্বাচন করুন" },
+        "body": { "ko": "무인발급기 화면에서 '재학증명서'를 선택하세요. 언어 변경 버튼으로 영어 등 다른 언어로 전환할 수 있습니다.", "en": "Select 'Enrollment Certificate' on the kiosk screen. You can switch to another language using the language button.", "zh": "在自助机屏幕上选择'在学证明书'。可以使用语言切换按钮切换到其他语言。", "bn": "কিওস্ক স্ক্রিনে 'ভর্তি সার্টিফিকেট' নির্বাচন করুন। ভাষা বোতাম ব্যবহার করে অন্য ভাষায় পরিবর্তন করতে পারেন।" },
+        "caution": { "ko": "증명서 종류에 따라 수수료가 발생할 수 있습니다.", "en": "Fees may apply depending on the certificate type.", "zh": "根据证书种类可能会产生费用。", "bn": "সার্টিফিকেটের ধরন অনুযায়ী ফি প্রযোজ্য হতে পারে।" },
+        "imagePath": "assets/images/kiosk_select_certificate.png"
       },
       {
         "id": "step_enroll_04",
@@ -66,7 +67,7 @@
     "categoryId": "documents",
     "title": { "ko": "성적 증명서", "en": "Transcript", "zh": "成绩证明书", "bn": "ট্রান্সক্রিপ্ট" },
     "summary": { "ko": "학기별 성적을 확인할 수 있는 공식 증명서", "en": "Official document showing semester grades", "zh": "可确认各学期成绩的官方证书", "bn": "সেমিস্টার গ্রেড দেখানো অফিসিয়াল ডকুমেন্ট" },
-    "location": { "ko": "학생회관 1층 무인발급기", "en": "1F Student Union Kiosk", "zh": "学生会馆1楼自助发证机", "bn": "১ম তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
+    "location": { "ko": "학생회관 2층 무인발급기", "en": "2F Student Union Kiosk", "zh": "学生会馆2楼自助发证机", "bn": "২য় তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
     "hours": { "ko": "09:00 - 18:00 (평일)", "en": "09:00 - 18:00 (Weekdays)", "zh": "09:00 - 18:00（工作日）", "bn": "০৯:০০ - ১৮:০০ (সপ্তাহের দিন)" },
     "requirements": { "ko": "학생증 또는 신분증", "en": "Student ID or national ID", "zh": "学生证或身份证", "bn": "ছাত্র আইডি বা জাতীয় পরিচয়পত্র" },
     "targetUsers": { "ko": "재학생 / 졸업생", "en": "Current students / Alumni", "zh": "在校生 / 毕业生", "bn": "বর্তমান শিক্ষার্থী / প্রাক্তন শিক্ষার্থী" },
@@ -79,8 +80,8 @@
         "id": "step_transcript_01",
         "serviceId": "certificate_transcript",
         "order": 1,
-        "title": { "ko": "학생회관 1층으로 이동", "en": "Go to 1F of Student Union", "zh": "前往学生会馆1楼", "bn": "স্টুডেন্ট ইউনিয়নের ১ম তলায় যান" },
-        "body": { "ko": "학생회관 건물 1층에 위치한 무인발급기 앞으로 이동하세요.", "en": "Go to the self-service kiosk on the 1st floor of the Student Union building.", "zh": "前往学生会馆1楼的自助发证机前。", "bn": "স্টুডেন্ট ইউনিয়ন বিল্ডিংয়ের ১ম তলায় সেলফ-সার্ভিস কিওস্কে যান।" },
+        "title": { "ko": "학생회관 2층으로 이동", "en": "Go to 2F of Student Union", "zh": "前往学生会馆2楼", "bn": "স্টুডেন্ট ইউনিয়নের ২য় তলায় যান" },
+        "body": { "ko": "학생회관 건물 2층에 위치한 무인발급기 앞으로 이동하세요.", "en": "Go to the self-service kiosk on the 2nd floor of the Student Union building.", "zh": "前往学生会馆2楼的自助发证机前。", "bn": "স্টুডেন্ট ইউনিয়ন বিল্ডিংয়ের ২য় তলায় সেলফ-সার্ভিস কিওস্কে যান।" },
         "caution": null
       },
       {
@@ -106,7 +107,7 @@
     "categoryId": "documents",
     "title": { "ko": "졸업 증명서", "en": "Graduation Certificate", "zh": "毕业证明书", "bn": "স্নাতক সার্টিফিকেট" },
     "summary": { "ko": "졸업 완료 사실을 증명하는 공식 증명서", "en": "Official certificate proving graduation completion", "zh": "证明毕业完成事实的官方证书", "bn": "স্নাতক সম্পন্নের প্রমাণের অফিসিয়াল সার্টিফিকেট" },
-    "location": { "ko": "학생회관 1층 무인발급기", "en": "1F Student Union Kiosk", "zh": "学生会馆1楼自助发证机", "bn": "১ম তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
+    "location": { "ko": "학생회관 2층 무인발급기", "en": "2F Student Union Kiosk", "zh": "学生会馆2楼自助发证机", "bn": "২য় তলা স্টুডেন্ট ইউনিয়ন কিওস্ক" },
     "hours": { "ko": "09:00 - 18:00 (평일)", "en": "09:00 - 18:00 (Weekdays)", "zh": "09:00 - 18:00（工作日）", "bn": "০৯:০০ - ১৮:০০ (সপ্তাহের দিন)" },
     "requirements": { "ko": "신분증", "en": "National ID", "zh": "身份证", "bn": "জাতীয় পরিচয়পত্র" },
     "targetUsers": { "ko": "졸업생", "en": "Alumni", "zh": "毕业生", "bn": "প্রাক্তন শিক্ষার্থী" },
@@ -119,8 +120,8 @@
         "id": "step_grad_01",
         "serviceId": "certificate_graduation",
         "order": 1,
-        "title": { "ko": "학생회관 1층으로 이동", "en": "Go to 1F of Student Union", "zh": "前往学生会馆1楼", "bn": "স্টুডেন্ট ইউনিয়নের ১ম তলায় যান" },
-        "body": { "ko": "학생회관 건물 1층에 위치한 무인발급기 앞으로 이동하세요.", "en": "Go to the self-service kiosk on the 1st floor of the Student Union building.", "zh": "前往学生会馆1楼的自助发证机前。", "bn": "স্টুডেন্ট ইউনিয়ন বিল্ডিংয়ের ১ম তলায় সেলফ-সার্ভিস কিওস্কে যান।" },
+        "title": { "ko": "학생회관 2층으로 이동", "en": "Go to 2F of Student Union", "zh": "前往学生会馆2楼", "bn": "স্টুডেন্ট ইউনিয়নের ২য় তলায় যান" },
+        "body": { "ko": "학생회관 건물 2층에 위치한 무인발급기 앞으로 이동하세요.", "en": "Go to the self-service kiosk on the 2nd floor of the Student Union building.", "zh": "前往学生会馆2楼的自助发证机前。", "bn": "স্টুডেন্ট ইউনিয়ন বিল্ডিংয়ের ২য় তলায় সেলফ-সার্ভিস কিওস্কে যান।" },
         "caution": null
       },
       {

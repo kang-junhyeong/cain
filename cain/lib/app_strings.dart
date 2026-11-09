@@ -239,6 +239,67 @@ class AppStrings {
   String get close => _t(ko: '닫기', en: 'Close', zh: '关闭', bn: 'বন্ধ করুন');
   String get back => _t(ko: '뒤로', en: 'Back', zh: '返回', bn: 'পেছনে' );
 
+  // 단계 안내 지도 (도보 길찾기)
+  String get myLocation => _t(ko: '내 위치', en: 'My location', zh: '我的位置', bn: 'আমার অবস্থান');
+  String get mapTapMyLocation => _t(
+    ko: '오른쪽 아래 버튼을 누르면 현재 위치에서 도보 경로를 보여드려요.',
+    en: 'Tap the button at the bottom right to see the walking route from your location.',
+    zh: '点击右下角按钮，即可查看从当前位置出发的步行路线。',
+    bn: 'আপনার অবস্থান থেকে হাঁটার পথ দেখতে নিচে ডানদিকের বোতামে চাপুন।',
+  );
+  String get mapFindingRoute => _t(
+    ko: '도보 경로를 찾는 중...',
+    en: 'Finding walking route...',
+    zh: '正在查找步行路线...',
+    bn: 'হাঁটার পথ খোঁজা হচ্ছে...',
+  );
+  String walkingSummary(int minutes, int meters) => _t(
+    ko: '도보 약 $minutes분 · ${_distance(meters)}',
+    en: 'About $minutes min walk · ${_distance(meters)}',
+    zh: '步行约$minutes分钟 · ${_distance(meters)}',
+    bn: 'হেঁটে প্রায় $minutes মিনিট · ${_distance(meters)}',
+  );
+  String get locationPermissionDenied => _t(
+    ko: '현재 위치를 표시하려면 위치 권한이 필요해요.',
+    en: 'Location permission is required to show your current location.',
+    zh: '需要位置权限才能显示您的当前位置。',
+    bn: 'আপনার বর্তমান অবস্থান দেখাতে অবস্থানের অনুমতি প্রয়োজন।',
+  );
+  String get locationPermissionForever => _t(
+    ko: '위치 권한이 꺼져 있어요. 설정에서 위치 권한을 허용해 주세요.',
+    en: 'Location permission is turned off. Please allow it in Settings.',
+    zh: '位置权限已关闭，请在设置中允许。',
+    bn: 'অবস্থানের অনুমতি বন্ধ আছে। সেটিংসে অনুমতি দিন।',
+  );
+  String get locationServiceOff => _t(
+    ko: '휴대폰의 위치(GPS)가 꺼져 있어요. 켜고 다시 시도해 주세요.',
+    en: 'Location (GPS) is turned off. Please turn it on and try again.',
+    zh: '手机定位(GPS)已关闭，请开启后重试。',
+    bn: 'ফোনের লোকেশন (GPS) বন্ধ। চালু করে আবার চেষ্টা করুন।',
+  );
+  String get openSettings => _t(ko: '설정 열기', en: 'Open Settings', zh: '打开设置', bn: 'সেটিংস খুলুন');
+  String get routeUnavailable => _t(
+    ko: '도보 경로를 불러오지 못했어요. 지도의 건물 위치를 참고해 주세요.',
+    en: 'Could not load the walking route. Please use the building marker on the map.',
+    zh: '无法加载步行路线，请参考地图上的建筑位置。',
+    bn: 'হাঁটার পথ লোড করা যায়নি। মানচিত্রে ভবনের চিহ্ন দেখুন।',
+  );
+
+  String _distance(int meters) =>
+      meters >= 1000 ? '${(meters / 1000).toStringAsFixed(1)}km' : '${meters}m';
+
+  // 건물 내 배치도 길찾기
+  String floorLabel(int floor) => _t(ko: '$floor층', en: '${floor}F', zh: '$floor楼', bn: '$floor তলা');
+  String get floorPlanYouAreHere => _t(ko: '현위치 (계단·엘리베이터)', en: 'You are here (stairs·elevator)', zh: '当前位置（楼梯·电梯）', bn: 'আপনি এখানে (সিঁড়ি·লিফট)');
+  String get floorPlanKiosk => _t(ko: '무인발급기', en: 'Certificate kiosk', zh: '自助发证机', bn: 'সার্টিফিকেট কিওস্ক');
+  String get floorPlanRoute => _t(ko: '이동 경로', en: 'Route', zh: '路线', bn: 'পথ');
+  String get floorPlanZoomHint => _t(
+    ko: '배치도를 누르면 크게 볼 수 있어요.',
+    en: 'Tap the floor plan to view it larger.',
+    zh: '点击平面图可放大查看。',
+    bn: 'বড় করে দেখতে ফ্লোর প্ল্যানে চাপুন।',
+  );
+
   String _t({required String ko, required String en, required String zh, required String bn}) {
     switch (locale) {
       case 'ko': return ko;

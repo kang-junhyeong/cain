@@ -5,10 +5,48 @@ import '../app_strings.dart';
 import '../viewmodels/guide_view_model.dart';
 import '../viewmodels/locale_provider.dart';
 import '../models/service.dart';
+import '../repositories/building_repository.dart';
 import '../repositories/service_repository.dart';
+import '../widgets/floor_plan_guide.dart';
 import '../widgets/step_nav_button.dart';
+import '../widgets/step_route_map.dart';
 import 'assistant_screen.dart';
 import 'completion_screen.dart';
+
+// 단계별 시각 자료 연결 (모델 필드 추가 없이 단계 ID로 연결한다)
+
+/// 건물까지 구글맵·도보 경로를 보여줄 단계 (서비스의 buildingId 좌표 사용)
+const Set<String> _mapStepIds = {'step_enroll_01'};
+
+/// 건물 안 배치도 길찾기를 보여줄 단계
+const Map<String, _FloorPlanRoute> _floorPlanSteps = {
+  'step_enroll_02': _FloorPlanRoute(
+    imagePath: 'assets/map/student_union_2f.jpg',
+    aspectRatio: 900 / 1000,
+    floor: 2,
+    // 배치도 이미지 기준 0~1 비율 좌표. 첫 점 = 현위치(2층 계단·엘리베이터), 마지막 점 = 무인발급기
+    // 시연용 임의 위치: 2층 복도 오른쪽 끝 구석. TODO(위치 확인): 실제 위치 확인 후 마지막 점 조정
+    route: [
+      Offset(0.267, 0.185),
+      Offset(0.267, 0.235),
+      Offset(0.785, 0.235),
+    ],
+  ),
+};
+
+class _FloorPlanRoute {
+  final String imagePath;
+  final double aspectRatio;
+  final int floor;
+  final List<Offset> route;
+
+  const _FloorPlanRoute({
+    required this.imagePath,
+    required this.aspectRatio,
+    required this.floor,
+    required this.route,
+  });
+}
 
 class GuideStepScreen extends StatelessWidget {
   final String serviceId;
@@ -21,6 +59,7 @@ class GuideStepScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => GuideViewModel(
         repository: context.read<ServiceRepository>(),
+        buildingRepository: context.read<BuildingRepository>(),
         serviceId: serviceId,
         stepIndex: stepIndex,
       )..load(),
@@ -103,27 +142,8 @@ class _GuideStepViewState extends State<_GuideStepView> {
 
                   const SizedBox(height: 20),
 
-                  // 단계 이미지 (없으면 아이콘 placeholder)
-                  Container(
-                    width: double.infinity,
-                    height: 180,
-                    decoration: BoxDecoration(
-                      color: AppTheme.primary.withOpacity(0.08),
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: step.imagePath != null
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(14),
-                            child: Image.asset(step.imagePath!, fit: BoxFit.cover),
-                          )
-                        : Center(
-                            child: Icon(
-                              _stepIcon(currentIndex),
-                              size: 64,
-                              color: AppTheme.primary.withOpacity(0.4),
-                            ),
-                          ),
-                  ),
+                  // 단계 시각 자료 (지도 / 배치도 / 이미지 / 아이콘 placeholder)
+                  _buildStepVisual(step, vm, locale, currentIndex),
 
                   const SizedBox(height: 20),
 
@@ -279,11 +299,56 @@ class _GuideStepViewState extends State<_GuideStepView> {
     );
   }
 
+  Widget _buildStepVisual(GuideStep step, GuideViewModel vm, String locale, int index) {
+    final building = vm.building;
+    if (_mapStepIds.contains(step.id) && building != null && building.hasCoordinates) {
+      return StepRouteMap(key: ValueKey(step.id), building: building, locale: locale);
+    }
+
+    final floorPlan = _floorPlanSteps[step.id];
+    if (floorPlan != null) {
+      return FloorPlanGuide(
+        key: ValueKey(step.id),
+        imagePath: floorPlan.imagePath,
+        aspectRatio: floorPlan.aspectRatio,
+        floorLabel: '${building?.name.resolve(locale) ?? ''} ${AppStrings(locale).floorLabel(floorPlan.floor)}'.trim(),
+        route: floorPlan.route,
+        locale: locale,
+      );
+    }
+
+    if (step.imagePath != null) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(14),
+        child: AspectRatio(
+          aspectRatio: 16 / 10,
+          child: Image.asset(step.imagePath!, fit: BoxFit.cover),
+        ),
+      );
+    }
+
+    return Container(
+      width: double.infinity,
+      height: 180,
+      decoration: BoxDecoration(
+        color: AppTheme.primary.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Center(
+        child: Icon(
+          _stepIcon(index),
+          size: 64,
+          color: AppTheme.primary.withOpacity(0.4),
+        ),
+      ),
+    );
+  }
+
   IconData _stepIcon(int index) {
     const icons = [
       Icons.directions_walk,
+      Icons.map_outlined,
       Icons.touch_app,
-      Icons.credit_card,
       Icons.download_done,
     ];
     return icons[index % icons.length];

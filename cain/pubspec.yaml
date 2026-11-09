@@ -16,8 +16,9 @@ dependencies:
   url_launcher: ^6.3.0
   http: ^1.2.0
 
-  # TODO(지도 보류): 지도 구현 방식 결정 후 추가
-  # google_maps_flutter: ^2.5.0
+  # 단계 안내 지도·도보 경로 (재학증명서 1단계)
+  google_maps_flutter: ^2.19.0
+  geolocator: ^14.1.2
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +33,7 @@ flutter:
     - assets/data/services.json
     - assets/data/contacts.json
     - assets/data/buildings.json
-
-  # TODO(지도 보류): 층별 배치도 이미지 확보 후 추가
-  # - assets/maps/
+    # 층별 배치도 (원근 보정본만 등록, 원본 사진은 앱에 포함하지 않음)
+    - assets/map/student_union_2f.jpg
+    # 단계 안내 이미지
+    - assets/images/
